@@ -1,26 +1,32 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --brand: #3d5540;
+  --brand-soft: #718872;
+  --ink: #252a26;
+  --muted: #777d77;
+  --page: #faf8f3;
+  --subtle: #f2efe7;
+  --line: #e3e0d8;
+  --font-inter: "Inter";
+  --font-serif: "DM Serif Display";
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-inter), sans-serif;
 }
+button, input { font: inherit; }
+button, a { -webkit-tap-highlight-color: transparent; }
+:focus-visible { outline: 3px solid #c9853a; outline-offset: 3px; }
+.serif { font-family: var(--font-serif), Georgia, serif; }
+.shell { width: min(1296px, calc(100% - 40px)); margin-inline: auto; }
+.eyebrow { color: var(--brand-soft); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
+.section-title { font-family: var(--font-serif), Georgia, serif; font-size: clamp(30px, 3vw, 42px); line-height: 1.08; }
+.card { border: 1px solid var(--line); border-radius: 20px; background: var(--page); }
+@media (max-width: 720px) { .shell { width: min(100% - 28px, 1296px); } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
