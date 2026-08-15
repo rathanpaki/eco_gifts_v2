@@ -7,9 +7,10 @@ import { PurchasePanel } from "./purchase-panel";
 
 type ProductDetailPageProps = {
   product: PublicProduct;
+  signedIn: boolean;
 };
 
-export function ProductDetailPage({ product }: ProductDetailPageProps) {
+export function ProductDetailPage({ product, signedIn }: ProductDetailPageProps) {
   const price = new Intl.NumberFormat("en-US", {
     style: "currency",
     currency: product.currency,
@@ -56,6 +57,11 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
             )}
 
             <PurchasePanel
+              productId={product.id}
+              productName={product.name}
+              productSlug={product.slug}
+              personalizationAvailable={product.personalizationAvailable}
+              signedIn={signedIn}
               inStock={product.inStock}
               lowStock={product.lowStock}
               stockQuantity={product.stockQuantity}

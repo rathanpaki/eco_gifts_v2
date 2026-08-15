@@ -1,10 +1,11 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 const protectedPaths = ["/account", "/admin", "/orders", "/wishlist", "/checkout"];
+const sessionCookieName = process.env.SESSION_COOKIE_NAME ?? "session";
 
 export function proxy(request: NextRequest) {
   if (!protectedPaths.some((path) => request.nextUrl.pathname.startsWith(path))) return NextResponse.next();
-  if (request.cookies.has("session")) return NextResponse.next();
+  if (request.cookies.has(sessionCookieName)) return NextResponse.next();
   const signInUrl = new URL("/sign-in", request.url);
   signInUrl.searchParams.set("next", request.nextUrl.pathname);
   return NextResponse.redirect(signInUrl);

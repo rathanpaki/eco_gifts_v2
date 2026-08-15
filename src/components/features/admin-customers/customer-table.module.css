@@ -1,0 +1,13 @@
+.tableWrap { border:1px solid #e3e0d8; border-radius:14px; background:#faf8f3; overflow:auto; }
+.tableWrap table { width:100%; min-width:980px; border-collapse:collapse; }
+.tableWrap th { height:42px; color:#8a918a; font-size:10px; font-weight:600; }
+.tableWrap th,.tableWrap td { border-bottom:1px solid #e3e0d8; padding:10px 16px; text-align:left; }
+.tableWrap td { height:64px; color:#616861; font-size:11px; }
+.tableWrap tr:last-child td { border-bottom:0; }
+.tableWrap tbody tr:hover { background:#eef4ee; }
+.tableWrap a { color:#252a26; display:grid; gap:2px; text-decoration:none; }
+.tableWrap a strong { font-size:11px; }
+.tableWrap a small { font-size:10px; font-weight:600; }
+.empty { min-height:320px; display:grid; place-content:center; justify-items:center; text-align:center; }
+.empty h2 { margin:0; font:24px/1.2 var(--font-serif),serif; }
+.empty p { color:#8a918a; font-size:12px; }

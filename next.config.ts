@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 
+const apiOrigin = new URL(
+  process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000",
+).origin;
+
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
@@ -12,7 +16,7 @@ const nextConfig: NextConfig = {
     return [{
       source: "/(.*)",
       headers: [
-        { key: "Content-Security-Policy", value: `default-src 'self'; script-src 'self' 'unsafe-inline'${developmentEval}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://*.googleusercontent.com https://firebasestorage.googleapis.com https://storage.googleapis.com; font-src 'self' data:; connect-src 'self' http://localhost:4000 ${process.env.NEXT_PUBLIC_API_BASE_URL ?? ""} https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://*.firebasestorage.googleapis.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'` },
+        { key: "Content-Security-Policy", value: `default-src 'self'; script-src 'self' 'unsafe-inline'${developmentEval}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: ${apiOrigin} https://*.googleusercontent.com https://firebasestorage.googleapis.com https://storage.googleapis.com; font-src 'self' data:; connect-src 'self' ${apiOrigin} https://identitytoolkit.googleapis.com https://securetoken.googleapis.com https://*.googleapis.com https://*.firebaseio.com https://*.firebaseapp.com https://*.firebasestorage.googleapis.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'` },
         { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
         { key: "X-Content-Type-Options", value: "nosniff" },
         { key: "X-Frame-Options", value: "DENY" },

@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { cookies } from "next/headers";
 import { notFound } from "next/navigation";
 import { ProductDetailPage } from "@/components/features/product-detail/product-detail-page";
 import { StorefrontHeader } from "@/components/features/storefront/storefront-header";
@@ -20,14 +21,20 @@ export async function generateMetadata({ params }: ShopProductPageProps): Promis
 
 export default async function ShopProductPage({ params }: ShopProductPageProps) {
   const { slug } = await params;
-  const product = await getPublicProductBySlug(slug);
+  const [product, cookieStore] = await Promise.all([
+    getPublicProductBySlug(slug),
+    cookies(),
+  ]);
 
   if (!product) notFound();
 
   return (
     <>
       <StorefrontHeader />
-      <ProductDetailPage product={product} />
+      <ProductDetailPage
+        product={product}
+        signedIn={cookieStore.has(process.env.SESSION_COOKIE_NAME ?? "session")}
+      />
     </>
   );
 }

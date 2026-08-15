@@ -10,6 +10,30 @@ service cloud.firestore {
         && request.resource.data.subscribedAt == request.time;
       allow read, update, delete: if false;
     }
+    match /carts/{cartId} {
+      allow read, write: if false;
+    }
+    match /orders/{orderId} {
+      allow read, write: if false;
+    }
+    match /orders/{orderId}/events/{eventId} {
+      allow read, write: if false;
+    }
+    match /users/{userId}/notes/{noteId} {
+      allow read, write: if false;
+    }
+    match /customizations/{customizationId} {
+      allow read, write: if false;
+    }
+    match /ecoContributions/{contributionId} {
+      allow read, write: if false;
+    }
+    match /treeRecords/{treeId} {
+      allow read, write: if false;
+    }
+    match /rewardVouchers/{voucherId} {
+      allow read, write: if false;
+    }
     match /{document=**} { allow read, write: if false; }
   }
 }

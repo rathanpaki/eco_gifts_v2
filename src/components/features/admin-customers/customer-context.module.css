@@ -1,0 +1,23 @@
+.contact,.notes,.privacy { border-radius:16px; padding:18px; }
+.contact { border:1px solid #e3e0d8; background:#faf8f3; }
+.notes { background:#eef4ee; }
+.privacy { background:#f7eee7; }
+.contact h2,.notes h2 { margin:0 0 12px; font:21px/1.1 var(--font-serif),serif; }
+.privacy h2 { margin:0 0 8px; font-size:13px; }
+.fact { display:grid; gap:4px; margin-top:10px; }
+.fact strong { color:#8a918a; font-size:9px; text-transform:uppercase; }
+.fact span { color:#616861; font-size:11px; line-height:1.5; overflow-wrap:anywhere; }
+.noteList { max-height:180px; display:grid; gap:8px; overflow-y:auto; }
+.noteList>p { color:#616861; font-size:11px; }
+.noteList article { border-bottom:1px solid #d7e1d7; padding-bottom:8px; }
+.noteList article p { margin:0; color:#616861; font-size:11px; line-height:1.5; }
+.noteList article small { color:#8a918a; font-size:9px; }
+.notes form { display:grid; gap:8px; margin-top:12px; }
+.notes form label { font-size:10px; font-weight:600; }
+.notes textarea { min-height:76px; resize:vertical; border:1px solid #e3e0d8; border-radius:9px; background:#faf8f3; padding:9px; font:11px/1.4 var(--font-inter),sans-serif; }
+.notes button,.privacy button { min-height:40px; border:1px solid #e3e0d8; border-radius:9px; background:#faf8f3; color:#3d5540; font-size:11px; font-weight:600; }
+.notes button:disabled,.privacy button:disabled { opacity:.55; }
+.privacy { display:grid; gap:8px; }
+.privacy p,.privacy small { margin:0; color:#616861; font-size:10px; line-height:1.5; }
+.privacy small { color:#8a918a; }
+.formError { margin:0; color:#9d4141; font-size:10px; }

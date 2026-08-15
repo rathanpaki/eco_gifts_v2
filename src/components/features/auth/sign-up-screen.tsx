@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { Check } from "lucide-react";
 import { AuthButton, AuthField, AuthNotice } from "@/components/features/auth/auth-primitives";
 import { AuthNavbar } from "@/components/features/auth/auth-navbar";
@@ -14,13 +15,17 @@ const benefits = ["Track every order in plain language", "Reuse saved addresses 
 
 export function SignUpScreen() {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { error, pending, run } = useAuthAction();
   const [marketingOptIn, setMarketingOptIn] = useState(false);
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const values = Object.fromEntries(new FormData(event.currentTarget));
     const created = await run(() => signUp({ fullName: String(values.fullName), email: String(values.email), password: String(values.password), marketingOptIn }));
-    if (created) router.push(destination(created));
+    if (created) {
+      queryClient.clear();
+      router.push(destination(created));
+    }
   };
   return <main><AuthNavbar /><div className="account-layout">
     <section className="account-form"><p className="auth-kicker">Create your account</p><h1 className="serif">Make thoughtful giving easier</h1><p>Save addresses, track gifts, and keep your impact history in one place.</p>

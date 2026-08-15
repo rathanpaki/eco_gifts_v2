@@ -1,8 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { Leaf, Menu, Search, User, X } from "lucide-react";
+import { Leaf, Menu, Search, ShoppingBag, User, X } from "lucide-react";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { useCartQuery } from "@/hooks/use-cart";
 
 const navigation = [
   { label: "Home", href: "/" },
@@ -15,6 +17,9 @@ const navigation = [
 
 export function StorefrontHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const pathname = usePathname();
+  const { data: cart } = useCartQuery();
+  const cartCount = cart?.totalQuantity ?? 0;
 
   return (
     <header className="sticky top-0 z-50 border-b border-[var(--line)] bg-white/95 backdrop-blur">
@@ -49,11 +54,19 @@ export function StorefrontHeader() {
             <Search aria-hidden="true" size={18} />
           </Link>
           <Link
-            href="/sign-in"
+            href="/account/orders"
             className="grid size-11 place-items-center rounded-xl border border-[var(--line)] bg-white"
-            aria-label="Sign in to your account"
+            aria-label="Open your account"
           >
             <User aria-hidden="true" size={18} />
+          </Link>
+          <Link
+            href="/cart"
+            className={`flex h-11 min-w-11 items-center justify-center gap-1 rounded-xl border px-3 ${pathname === "/cart" ? "border-[var(--brand)] bg-[var(--brand)] text-white" : "border-[var(--line)] bg-white"}`}
+            aria-label={`Shopping bag with ${cartCount} items`}
+          >
+            <ShoppingBag aria-hidden="true" size={18} />
+            {cartCount > 0 && <span className="text-xs font-semibold">{cartCount}</span>}
           </Link>
         </div>
 
@@ -85,8 +98,11 @@ export function StorefrontHeader() {
               {item.label}
             </Link>
           ))}
-          <Link href="/sign-in" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-3 text-sm hover:bg-[var(--subtle)]">
-            Sign in
+          <Link href="/account/orders" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-3 text-sm hover:bg-[var(--subtle)]">
+            Account
+          </Link>
+          <Link href="/cart" onClick={() => setMenuOpen(false)} className="rounded-lg px-3 py-3 text-sm hover:bg-[var(--subtle)]">
+            Cart{cartCount > 0 ? ` (${cartCount})` : ""}
           </Link>
         </nav>
       )}

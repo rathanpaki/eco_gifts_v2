@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { type FormEvent } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { AuthButton, AuthField, AuthNotice } from "@/components/features/auth/auth-primitives";
 import { useAuthAction } from "@/hooks/use-auth-action";
 import { signIn, signInWithGoogle } from "@/services/auth.service";
@@ -11,14 +12,24 @@ import type { SessionUser } from "@/types/auth";
 
 export function SignInScreen({ nextPath }: { nextPath?: string }) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const { error, pending, run } = useAuthAction();
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const values = Object.fromEntries(new FormData(event.currentTarget));
     const user = await run(() => signIn({ email: String(values.email), password: String(values.password) }));
-    if (user) router.push(destination(user, nextPath));
+    if (user) {
+      queryClient.clear();
+      router.push(destination(user, nextPath));
+    }
   };
-  const google = async () => { const user = await run(signInWithGoogle); if (user) router.push(destination(user, nextPath)); };
+  const google = async () => {
+    const user = await run(signInWithGoogle);
+    if (user) {
+      queryClient.clear();
+      router.push(destination(user, nextPath));
+    }
+  };
   return (
     <main className="sign-in-layout">
       <aside className="brand-story">
