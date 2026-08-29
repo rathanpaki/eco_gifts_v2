@@ -18,6 +18,7 @@ export type PasswordResetValues = {
 
 export type SessionUser = {
   uid: string;
+  displayName: string | null;
   email: string | null;
   emailVerified: boolean;
   role: "USER" | "ADMIN";

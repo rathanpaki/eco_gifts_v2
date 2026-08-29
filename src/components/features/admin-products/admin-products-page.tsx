@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import { AdminProductsPagination } from "./admin-products-pagination";
 import { shouldBypassImageOptimization } from "@/lib/image-source";
 import { loadAdminProducts } from "@/services/admin-products.service";
 import type { AdminProduct, AdminProductPage } from "@/types/admin-product";
@@ -50,11 +51,11 @@ function Metrics({ page }: { page: AdminProductPage }) {
 function ProductsTable({ page, query }: { page: AdminProductPage; query: Query }) {
   if (!page.items.length) return <div className={styles.empty}><h2>No products found</h2><p>Create a product or adjust the current search and filters.</p></div>;
   return <>
-    <div className={styles.tableWrap}><table>
+    <div className={styles.tableWrap} id="admin-product-list"><table>
       <thead><tr><th>Product</th><th>Stock</th><th>Price</th><th>Eco score</th><th>Status</th><th>Updated</th></tr></thead>
       <tbody>{page.items.map((product) => <ProductRow product={product} key={product.id} />)}</tbody>
     </table></div>
-    {page.nextCursor && <Link className={styles.next} href={nextHref(query, page.nextCursor)}>Next page</Link>}
+    <AdminProductsPagination page={page} query={query} />
   </>;
 }
 
@@ -84,5 +85,4 @@ function FilterLink({ current, item, search }: { current: string; item: typeof f
 
 function ProductsState() { return <section className={styles.state} role="alert"><h1>Products unavailable</h1><p>The live catalog could not be loaded. Please try again shortly.</p></section>; }
 function money(cents: number, currency: string) { return new Intl.NumberFormat("en", { style: "currency", currency }).format(cents / 100); }
-function nextHref(query: Query, cursor: string) { const params = new URLSearchParams(); Object.entries(query).forEach(([key, value]) => { if (typeof value === "string" && key !== "cursor") params.set(key, value); }); params.set("cursor", cursor); return `/admin/products?${params}`; }
 const filters = [{ label: "All products", value: "all" }, { label: "Active", value: "active" }, { label: "Draft", value: "draft" }, { label: "Low stock", value: "low-stock" }] as const;

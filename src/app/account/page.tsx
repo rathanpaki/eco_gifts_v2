@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { AccountOverviewPage } from "@/components/features/account/account-overview-page-v2";
 
 export default function AccountPage() {
-  redirect("/account/orders");
+  return <AccountOverviewPage />;
 }

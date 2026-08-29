@@ -1,33 +1,34 @@
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
 import { formatMoney } from "@/lib/format-money";
 import type { Cart } from "@/types/cart";
+import { CartPromoCode, type AppliedPromo } from "./cart-promo-code";
 
 export function CartSummary({ cart }: { cart: Cart }) {
-  const subtotal = cart.currency
-    ? formatMoney(cart.subtotalCents, cart.currency)
-    : "Unavailable";
+  const [promo, setPromo] = useState<AppliedPromo>();
+  const currency = cart.currency ?? "USD";
+  const freeDelivery = cart.totalCents >= 5000 || promo?.discount.discountType === "free_delivery";
+  const discountCents = promo?.discount.amountCents ?? 0;
+  const totalCents = Math.max(0, cart.totalCents - discountCents);
+  const checkoutHref = promo ? `/checkout?promoCode=${encodeURIComponent(promo.code)}` : "/checkout";
   return (
-    <aside className="rounded-[20px] bg-[var(--subtle)] p-6 lg:sticky lg:top-24 lg:p-7" aria-labelledby="order-summary-title">
-      <h2 id="order-summary-title" className="serif text-[26px]">Order summary</h2>
-      <dl className="mt-5 space-y-4 text-sm">
-        <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">Subtotal</dt><dd className="font-semibold">{subtotal}</dd></div>
-        <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">Delivery</dt><dd>Calculated at checkout</dd></div>
-        <div className="flex justify-between gap-4"><dt className="text-[var(--muted)]">Taxes</dt><dd>Calculated at checkout</dd></div>
+    <aside className="min-h-0 border-t border-[var(--line)] pt-4 lg:sticky lg:top-24 lg:min-h-[520px] lg:rounded-[20px] lg:border-0 lg:bg-[var(--subtle)] lg:p-7" aria-labelledby="order-summary-title">
+      <h2 id="order-summary-title" className="serif hidden text-[26px] leading-9 lg:block">Order summary</h2>
+      {freeDelivery ? <div className="mt-[18px] flex h-12 items-center gap-[10px] rounded-xl bg-[#eef4ee] px-3 text-xs font-semibold text-[var(--brand)]"><span className="size-2 rounded-full bg-[var(--brand)]" />Free delivery applied</div> : null}
+      <dl className="mt-[18px] space-y-[18px] text-sm">
+        <Row label="Subtotal" value={formatMoney(cart.subtotalCents, currency)} />
+        {cart.personalizationCents > 0 ? <Row label="Personalization" value={formatMoney(cart.personalizationCents, currency)} /> : null}
+        <Row label="Delivery" value={freeDelivery ? "Free" : "Calculated next"} />
+        {promo ? <Row label={`Promotion · ${promo.code}`} value={promo.discount.discountType === "free_delivery" ? "Applied" : `−${formatMoney(discountCents, currency)}`} /> : null}
       </dl>
-      <div className="my-5 h-px bg-[var(--line)]" />
-      <div className="flex items-end justify-between gap-4 font-semibold">
-        <span>Current total</span><strong className="text-xl">{subtotal}</strong>
-      </div>
-      {!cart.readyForCheckout && (
-        <p className="mt-4 rounded-xl bg-white p-3 text-xs leading-5 text-red-700">
-          Remove unavailable products or reduce quantities before checkout.
-        </p>
-      )}
-      {cart.readyForCheckout ? (
-        <Link href="/checkout" className="mt-5 flex min-h-11 items-center justify-center rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white hover:bg-[var(--brand-dark)]">Proceed to checkout</Link>
-      ) : null}
-      <Link href="/shop" className="mt-3 flex min-h-11 items-center justify-center rounded-xl border border-[var(--line)] px-5 text-sm font-semibold hover:bg-white">Continue shopping</Link>
-      <p className="mt-3 text-xs leading-5 text-[var(--muted)]">Your prices and stock are revalidated from the live catalog.</p>
+      <div className="my-[18px] h-px bg-[var(--line)]" />
+      <div className="flex items-center justify-between gap-4 font-semibold"><span>Total</span><strong className="text-xl">{formatMoney(totalCents, currency)}</strong></div>
+      {!cart.readyForCheckout ? <p className="mt-4 rounded-xl bg-white p-3 text-xs leading-5 text-red-700">Remove unavailable products or reduce quantities before checkout.</p> : <Link href={checkoutHref} className="mt-[18px] flex h-11 items-center justify-center rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white">Continue to checkout</Link>}
+      <p className="mt-[18px] text-xs leading-[15px] text-[#8a918a]">Secure checkout · Taxes calculated next</p>
+      <CartPromoCode applied={promo} onApplied={setPromo} />
     </aside>
   );
 }
+function Row({ label, value }: { label: string; value: string }) { return <div className="flex justify-between gap-4"><dt className="text-[#8a918a]">{label}</dt><dd>{value}</dd></div>; }

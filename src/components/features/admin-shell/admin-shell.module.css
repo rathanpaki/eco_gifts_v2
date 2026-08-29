@@ -21,8 +21,21 @@
 
 .brand {
   color: white;
-  font: 20px/1.35 var(--font-serif), serif;
+  font:
+    20px/1.35 var(--font-serif),
+    serif;
   text-decoration: none;
+}
+
+.topRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.menuButton {
+  display: none;
 }
 
 .eyebrow {
@@ -53,6 +66,7 @@
 
 .navActive {
   background: #3d5540;
+  color: white;
   font-weight: 600;
 }
 
@@ -80,6 +94,13 @@
   cursor: pointer;
 }
 
+.sidebarGhost {
+  width: 240px;
+  height: 100vh;
+  background: #f2efe7;
+  flex: 0 0 auto;
+}
+
 .account button:disabled {
   opacity: 0.6;
 }
@@ -87,36 +108,83 @@
 .main {
   width: calc(100% - 240px);
   min-width: 0;
+  overflow-x: clip;
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .page {
     display: block;
   }
 
   .sidebar {
-    position: static;
+    position: sticky;
+    z-index: 60;
+    top: 0;
     width: 100%;
     height: auto;
-    padding: 18px;
+    padding: 14px 16px;
+    max-height: 100dvh;
+    overflow-y: auto;
   }
 
   .sidebar nav {
-    display: flex;
-    overflow-x: auto;
+    display: none;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 4px;
+    padding-top: 6px;
+  }
+
+  .sidebar nav.navOpen {
+    display: grid;
+  }
+
+  .menuButton {
+    display: grid;
+    width: 42px;
+    height: 42px;
+    place-items: center;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 10px;
+    background: transparent;
+    color: white;
+  }
+
+  .eyebrow {
+    display: none;
+    padding-top: 8px;
+  }
+
+  .eyebrow.mobileOpen {
+    display: block;
   }
 
   .navLink,
   .navActive,
   .navDisabled {
-    white-space: nowrap;
+    min-height: 42px;
+  }
+  .sidebarGhost {
+    display: none;
   }
 
   .account {
     display: none;
   }
 
+  .account.accountOpen {
+    display: grid;
+    margin-top: 10px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+
   .main {
     width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .sidebar nav {
+    grid-template-columns: 1fr;
   }
 }

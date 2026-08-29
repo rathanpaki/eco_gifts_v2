@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { OrderHistoryPage } from "@/components/features/orders/order-history-page";
+import { OrderHistoryPage } from "@/components/features/orders/order-history-page-v2";
 
 export const metadata: Metadata = {
   title: "Your orders | EcoGifts",

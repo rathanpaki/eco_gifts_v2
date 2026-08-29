@@ -12,15 +12,29 @@ export function OrderHistoryCard({ order }: { order: OrderSummary }) {
     <article className="overflow-hidden rounded-2xl border border-[var(--line)] bg-white">
       <header className="flex flex-col gap-3 border-b border-[var(--line)] bg-[var(--subtle)] px-5 py-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <p className="text-xs text-[var(--muted)]">Placed {formatOrderDate(order.createdAt)}</p>
-          <h2 className="mt-1 font-mono text-sm font-bold text-[var(--ink)]">{order.orderNumber}</h2>
+          <p className="text-xs text-[var(--muted)]">
+            Placed {formatOrderDate(order.createdAt)}
+          </p>
+          <h2 className="mt-1 font-mono text-sm font-bold text-[var(--ink)]">
+            {order.orderNumber}
+          </h2>
         </div>
-        <OrderStatusBadge status={order.fulfillmentStatus} />
+        <div className="grid justify-items-start gap-2 sm:justify-items-end">
+          <OrderStatusBadge status={order.fulfillmentStatus} />
+          {order.deliveryConfirmationStatus === "awaiting_customer" ? (
+            <span className="text-xs font-semibold text-amber-700">
+              Receipt confirmation needed
+            </span>
+          ) : null}
+        </div>
       </header>
 
-      <div className="divide-y divide-[var(--line)] px-5">
+      <div className="divide-y divide-[var(--line)] px-4 sm:px-5">
         {visibleItems.map((item) => (
-          <div className="flex items-center gap-3 py-4" key={item.itemId}>
+          <div
+            className="grid grid-cols-[56px_minmax(0,1fr)] items-center gap-3 py-4 sm:flex"
+            key={item.itemId}
+          >
             <div className="grid size-14 shrink-0 place-items-center overflow-hidden rounded-xl bg-[var(--subtle)] text-[var(--brand)]">
               {item.image ? (
                 <Image
@@ -35,14 +49,20 @@ export function OrderHistoryCard({ order }: { order: OrderSummary }) {
               )}
             </div>
             <div className="min-w-0 flex-1">
-              <Link href={`/shop/${item.slug}`} className="truncate text-sm font-semibold hover:text-[var(--brand)]">
+              <Link
+                href={`/shop/${item.slug}`}
+                className="truncate text-sm font-semibold hover:text-[var(--brand)]"
+              >
                 {item.name}
               </Link>
               <p className="mt-1 text-xs text-[var(--muted)]">
-                Quantity {item.quantity}{item.customization ? " · Personalized" : ""}
+                Quantity {item.quantity}
+                {item.customization ? " · Personalized" : ""}
               </p>
             </div>
-            <p className="text-sm font-semibold">{formatMoney(item.lineTotalCents, order.currency)}</p>
+            <p className="col-span-2 text-sm font-semibold sm:col-auto">
+              {formatMoney(item.lineTotalCents, order.currency)}
+            </p>
           </div>
         ))}
       </div>
@@ -54,12 +74,22 @@ export function OrderHistoryCard({ order }: { order: OrderSummary }) {
       )}
       <footer className="grid gap-4 border-t border-[var(--line)] px-5 py-4 sm:grid-cols-[1fr_auto] sm:items-center">
         <div className="flex flex-wrap gap-x-5 gap-y-2 text-xs text-[var(--muted)]">
-          <span className="flex items-center gap-1.5"><Truck size={14} /> {order.estimatedDelivery}</span>
-          <span className="flex items-center gap-1.5"><Leaf size={14} /> Eco score {order.impact.score}</span>
+          <span className="flex items-center gap-1.5">
+            <Truck size={14} /> {order.estimatedDelivery}
+          </span>
+          <span className="flex items-center gap-1.5">
+            <Leaf size={14} /> Eco score {order.impact.score}
+          </span>
         </div>
         <div className="flex items-center justify-between gap-5 sm:justify-end">
-          <p><span className="text-xs text-[var(--muted)]">Total </span><strong>{formatMoney(order.totalCents, order.currency)}</strong></p>
-          <Link href={`/orders/${order.id}`} className="flex items-center gap-1 text-sm font-semibold text-[var(--brand)]">
+          <p>
+            <span className="text-xs text-[var(--muted)]">Total </span>
+            <strong>{formatMoney(order.totalCents, order.currency)}</strong>
+          </p>
+          <Link
+            href={`/orders/${order.id}`}
+            className="flex items-center gap-1 text-sm font-semibold text-[var(--brand)]"
+          >
             Details <ArrowRight size={15} />
           </Link>
         </div>

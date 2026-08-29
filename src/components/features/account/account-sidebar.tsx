@@ -1,6 +1,12 @@
 "use client";
 
-import { LayoutDashboard, LogOut, Package, ShoppingBag } from "lucide-react";
+import {
+  Leaf,
+  LayoutDashboard,
+  LogOut,
+  Package,
+  ShoppingBag,
+} from "lucide-react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { type ReactNode, useState } from "react";
@@ -36,12 +42,28 @@ export function AccountSidebar({ email, isAdmin }: AccountSidebarProps) {
   return (
     <aside className="h-fit rounded-2xl border border-[var(--line)] bg-white p-4 lg:sticky lg:top-24">
       <div className="border-b border-[var(--line)] px-2 pb-4">
-        <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">Account</p>
-        <p className="mt-1 truncate text-sm font-semibold">{email ?? "EcoGifts customer"}</p>
+        <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
+          Account
+        </p>
+        <p className="mt-1 truncate text-sm font-semibold">
+          {email ?? "EcoGifts customer"}
+        </p>
       </div>
       <nav className="mt-3 grid gap-1" aria-label="Account navigation">
-        <AccountLink active={pathname === "/account/orders"} href="/account/orders">
+        <AccountLink
+          active={pathname === "/account/orders"}
+          href="/account/orders"
+        >
           <Package size={17} /> Orders
+        </AccountLink>
+        <AccountLink active={pathname === "/account"} href="/account">
+          <LayoutDashboard size={17} /> Overview
+        </AccountLink>
+        <AccountLink
+          active={pathname === "/account/impact"}
+          href="/account/impact"
+        >
+          <Leaf size={17} /> My impact
         </AccountLink>
         <AccountLink active={false} href="/shop">
           <ShoppingBag size={17} /> Continue shopping
@@ -60,7 +82,11 @@ export function AccountSidebar({ email, isAdmin }: AccountSidebarProps) {
       >
         <LogOut size={17} /> {pending ? "Signing out..." : "Sign out"}
       </button>
-      {error && <p className="mt-2 px-2 text-xs text-red-700" role="alert">{error}</p>}
+      {error && (
+        <p className="mt-2 px-2 text-xs text-red-700" role="alert">
+          {error}
+        </p>
+      )}
     </aside>
   );
 }

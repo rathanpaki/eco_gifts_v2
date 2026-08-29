@@ -1,13 +1,8 @@
+import { LogoDrawLoader } from "@/components/ui/logo-draw-loader";
 import styles from "./admin-customers.module.css";
 
 export function CustomersLoading() {
-  return (
-    <div className={styles.loading} aria-label="Loading customers">
-      <span />
-      <span />
-      <span />
-    </div>
-  );
+  return <LogoDrawLoader label="Loading customers" />;
 }
 
 export function CustomersError({

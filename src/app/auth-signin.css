@@ -1,0 +1,101 @@
+.sign-in-layout {
+  display: grid;
+  grid-template-columns: minmax(480px, 680px) minmax(560px, 760px);
+  min-height: 100svh;
+}
+.brand-story {
+  background-image:
+    linear-gradient(#00000012, #00000012), url("/images/auth/brand-story.jpeg");
+  background-position: center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 64px;
+}
+.brand-quote {
+  background: var(--page);
+  border-radius: 18px;
+  padding: 28px;
+}
+.brand-quote p {
+  font-size: 28px;
+  line-height: 1.12;
+  margin: 0 0 12px;
+}
+.brand-quote small {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+}
+.sign-in-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  justify-content: center;
+  margin: auto;
+  max-width: 552px;
+  padding: 72px 0;
+  width: calc(100% - 80px);
+}
+.sign-in-panel h1,
+.account-form h1,
+.recovery-card h1 {
+  font-size: 42px;
+  font-weight: 400;
+  line-height: 1;
+  margin: 0;
+}
+.sign-in-panel > div p,
+.account-form > p:not(.auth-kicker),
+.recovery-card > p {
+  color: var(--muted);
+  font-size: 15px;
+  margin: 14px 0 0;
+}
+.sign-in-panel form {
+  display: grid;
+  gap: 14px;
+}
+.remember-row {
+  display: flex;
+  font-size: 13px;
+  justify-content: space-between;
+}
+.remember-row label {
+  color: var(--muted);
+}
+.remember-row a,
+.auth-switch a,
+.recovery-preview a {
+  color: var(--brand);
+  font-weight: 600;
+  text-decoration: none;
+}
+.auth-divider {
+  align-items: center;
+  color: var(--muted);
+  display: flex;
+  font-size: 12px;
+  gap: 12px;
+}
+.auth-divider span {
+  background: var(--line);
+  flex: 1;
+  height: 1px;
+}
+.guest-link {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 13px 18px;
+  text-align: center;
+  text-decoration: none;
+}
+.auth-switch {
+  color: var(--muted);
+  font-size: 13px;
+  margin: 0;
+}

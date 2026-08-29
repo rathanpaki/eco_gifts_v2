@@ -4,17 +4,19 @@ import type {
   CustomerListInput,
   CustomerOrderFilter,
 } from "@/types/admin-customer";
-import styles from "./admin-customers.module.css";
+import styles from "./customer-filters.module.css";
 
-export function CustomerFilters({
-  draft,
-  onDraftChange,
-  onSubmit,
-}: {
+type Props = {
   draft: CustomerListInput;
   onDraftChange: (value: CustomerListInput) => void;
-  onSubmit: () => void;
-}) {
+  onSubmit: (value?: CustomerListInput) => void;
+};
+
+export function CustomerFilters({ draft, onDraftChange, onSubmit }: Props) {
+  const apply = (next: CustomerListInput) => {
+    onDraftChange(next);
+    onSubmit(next);
+  };
   return (
     <form
       className={styles.filters}
@@ -35,40 +37,68 @@ export function CustomerFilters({
           value={draft.search}
         />
       </label>
-      <label>
-        <span>Consent</span>
-        <select
-          onChange={(event) =>
-            onDraftChange({
-              ...draft,
-              consent: event.target.value as CustomerConsentFilter,
-            })
-          }
-          value={draft.consent}
-        >
-          <option value="any">Consent: Any</option>
-          <option value="opted-in">Opted in</option>
-          <option value="not-opted-in">Not opted in</option>
-        </select>
-      </label>
-      <label>
-        <span>Orders</span>
-        <select
-          onChange={(event) =>
-            onDraftChange({
-              ...draft,
-              orders: event.target.value as CustomerOrderFilter,
-            })
-          }
-          value={draft.orders}
-        >
-          <option value="any">Orders: Any</option>
-          <option value="none">No orders</option>
-          <option value="first-time">First-time</option>
-          <option value="repeat">Repeat</option>
-        </select>
-      </label>
-      <button type="submit">Apply</button>
+      <Filter
+        label="Customer group"
+        value={
+          ["first-time", "repeat"].includes(draft.orders) ? draft.orders : "any"
+        }
+        onChange={(value) =>
+          apply({ ...draft, orders: value as CustomerOrderFilter })
+        }
+        options={[
+          ["any", "All customers"],
+          ["first-time", "First-time"],
+          ["repeat", "Repeat customers"],
+        ]}
+      />
+      <Filter
+        label="Consent"
+        value={draft.consent}
+        onChange={(value) =>
+          apply({ ...draft, consent: value as CustomerConsentFilter })
+        }
+        options={[
+          ["any", "Consent: Any"],
+          ["opted-in", "Opted in"],
+          ["not-opted-in", "Not opted in"],
+        ]}
+      />
+      <Filter
+        label="Orders"
+        value={draft.orders === "none" ? "none" : "any"}
+        onChange={(value) =>
+          apply({ ...draft, orders: value as CustomerOrderFilter })
+        }
+        options={[
+          ["any", "Orders: Any"],
+          ["none", "Orders: None"],
+        ]}
+      />
     </form>
+  );
+}
+
+function Filter({
+  label,
+  onChange,
+  options,
+  value,
+}: {
+  label: string;
+  onChange: (value: string) => void;
+  options: string[][];
+  value: string;
+}) {
+  return (
+    <label>
+      <span>{label}</span>
+      <select onChange={(event) => onChange(event.target.value)} value={value}>
+        {options.map(([option, text]) => (
+          <option key={option} value={option}>
+            {text}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }

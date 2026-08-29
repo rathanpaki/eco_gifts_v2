@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { formatMoney } from "@/lib/format-money";
 import type { AdminCustomer } from "@/types/admin-customer";
 import styles from "./customer-orders.module.css";
@@ -7,7 +8,7 @@ export function CustomerOrdersCard({ customer }: { customer: AdminCustomer }) {
     <section className={styles.orders}>
       <header>
         <h2>Recent orders</h2>
-        <span>{customer.orderCount} total orders</span>
+        <Link href="/admin/orders">View all {customer.orderCount} orders</Link>
       </header>
       {customer.recentOrders.length ? (
         <div className={styles.orderTable}>
@@ -56,6 +57,8 @@ function date(value: string): string {
     new Date(value),
   );
 }
+
 function label(value: string): string {
-  return value.charAt(0).toUpperCase() + value.slice(1);
+  const text = value.replaceAll("-", " ");
+  return text.charAt(0).toUpperCase() + text.slice(1);
 }

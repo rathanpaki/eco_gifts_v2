@@ -31,8 +31,9 @@ export function PurchasePanel({
 }: PurchasePanelProps) {
   const add = useAddCartItem();
   const [customizing, setCustomizing] = useState(false);
-  const [customization, setCustomization] =
-    useState<SavedCustomization | null>(null);
+  const [customization, setCustomization] = useState<SavedCustomization | null>(
+    null,
+  );
   const soldOut = !inStock || stockQuantity < 1;
   const stockLabel = soldOut
     ? "Out of stock"
@@ -90,7 +91,9 @@ export function PurchasePanel({
         </Link>
       )}
       {add.error && (
-        <p className="text-xs text-red-700" role="alert">{add.error.message}</p>
+        <p className="text-xs text-red-700" role="alert">
+          {add.error.message}
+        </p>
       )}
 
       {customizing && (

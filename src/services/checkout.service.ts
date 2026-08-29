@@ -1,39 +1,60 @@
-'use client';
+"use client";
 
 import {
   checkoutQuoteSchema,
   orderSchema,
-} from '@/lib/schemas/checkout.schema';
-import { apiMutation, apiResponseMessage, clientApiBaseUrl } from '@/services/client-api';
+} from "@/lib/schemas/checkout.schema";
+import {
+  apiMutation,
+  apiResponseMessage,
+  clientApiBaseUrl,
+} from "@/services/client-api";
 import type {
   CheckoutQuote,
   DeliveryOptionId,
   Order,
   PackagingOptionId,
   PlaceOrderInput,
-} from '@/types/checkout';
+} from "@/types/checkout";
+import type { ContributionCause } from "@/types/contribution.types";
 
 export interface QuoteSelection {
   packagingId?: PackagingOptionId;
   deliveryId?: DeliveryOptionId;
+  contributionCause?: ContributionCause;
+  contributionAmountCents?: number;
+  voucherId?: string;
+  promoCode?: string;
 }
 
 export async function getCheckoutQuote(
   selection: QuoteSelection,
 ): Promise<CheckoutQuote> {
   const query = new URLSearchParams();
-  if (selection.packagingId) query.set('packagingId', selection.packagingId);
-  if (selection.deliveryId) query.set('deliveryId', selection.deliveryId);
-  const suffix = query.size ? `?${query.toString()}` : '';
+  if (selection.packagingId) query.set("packagingId", selection.packagingId);
+  if (selection.deliveryId) query.set("deliveryId", selection.deliveryId);
+  if (selection.contributionCause) {
+    query.set("contributionCause", selection.contributionCause);
+  }
+  if (selection.contributionAmountCents) {
+    query.set(
+      "contributionAmountCents",
+      String(selection.contributionAmountCents),
+    );
+  }
+  if (selection.voucherId) query.set("voucherId", selection.voucherId);
+  if (selection.promoCode) query.set("promoCode", selection.promoCode);
+  const suffix = query.size ? `?${query.toString()}` : "";
   const response = await fetch(
     `${clientApiBaseUrl}/api/checkout/quote${suffix}`,
-    { cache: 'no-store', credentials: 'include' },
+    { cache: "no-store", credentials: "include" },
   );
   if (!response.ok) {
     const message = await apiResponseMessage(response);
     throw new Error(
-      response.status === 400 && message === 'The cart is not ready for checkout.'
-        ? 'Your bag is empty or its products are no longer available. Review your bag before checkout.'
+      response.status === 400 &&
+        message === "The cart is not ready for checkout."
+        ? "Your bag is empty or its products are no longer available. Review your bag before checkout."
         : message,
     );
   }
@@ -41,9 +62,9 @@ export async function getCheckoutQuote(
 }
 
 export async function placeOrder(input: PlaceOrderInput): Promise<Order> {
-  const response = await apiMutation('/checkout/orders', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+  const response = await apiMutation("/checkout/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
     body: JSON.stringify(input),
   });
   return orderSchema.parse(await response.json());

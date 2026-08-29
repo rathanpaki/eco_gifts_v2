@@ -16,6 +16,7 @@
 html { scroll-behavior: smooth; }
 body {
   margin: 0;
+  overflow-x: hidden;
   background: var(--page);
   color: var(--ink);
   font-family: var(--font-inter), sans-serif;
@@ -28,5 +29,5 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .eyebrow { color: var(--brand-soft); font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; }
 .section-title { font-family: var(--font-serif), Georgia, serif; font-size: clamp(30px, 3vw, 42px); line-height: 1.08; }
 .card { border: 1px solid var(--line); border-radius: 20px; background: var(--page); }
-@media (max-width: 720px) { .shell { width: min(100% - 28px, 1296px); } }
+@media (max-width: 720px) { .shell { width: min(100% - 40px, 1296px); } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }

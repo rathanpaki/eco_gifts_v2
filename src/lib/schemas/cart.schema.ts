@@ -26,6 +26,7 @@ export const cartItemSchema = z.object({
       previewPath: z
         .string()
         .regex(/^\/api\/customizations\/[A-Za-z0-9_-]+\/preview$/),
+      text: z.string().max(120).nullable(),
     })
     .nullable(),
 });
@@ -34,7 +35,12 @@ export const cartSchema = z.object({
   items: z.array(cartItemSchema).max(50),
   totalQuantity: z.number().int().nonnegative(),
   subtotalCents: z.number().int().nonnegative(),
-  currency: z.string().regex(/^[A-Z]{3}$/).nullable(),
+  personalizationCents: z.number().int().nonnegative(),
+  totalCents: z.number().int().nonnegative(),
+  currency: z
+    .string()
+    .regex(/^[A-Z]{3}$/)
+    .nullable(),
   readyForCheckout: z.boolean(),
   updatedAt: z.string().datetime().nullable(),
 });

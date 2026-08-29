@@ -38,7 +38,5 @@
 .empty, .state { border: 1px solid #e3e0d8; border-radius: 16px; padding: 48px 24px; text-align: center; }
 .empty h2 { margin: 0; font: 24px/1.2 var(--font-serif), serif; }
 .empty p, .state p { color: #8a918a; }
-.next { width: fit-content; color: #3d5540; font-size: 13px; font-weight: 600; }
-
 @media (max-width: 1000px) { .metrics { grid-template-columns: repeat(2, 1fr); } .tools { display: grid; } }
 @media (max-width: 640px) { .page { padding: 24px 16px; } .header { display: grid; } .primary { width: 100%; } .metrics { gap: 10px; } .search { width: 100%; } .search input { min-width: 0; width: 100%; } }

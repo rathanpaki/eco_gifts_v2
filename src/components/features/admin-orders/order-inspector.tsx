@@ -5,6 +5,8 @@ import type { AdminOrder } from "@/types/admin-order";
 import type { FulfillmentStatus } from "@/types/checkout";
 import { AdminOrderStatus, statusLabel } from "./admin-order-status";
 import { FulfillmentProgress } from "./fulfillment-progress";
+import { AdminDeliveryConfirmation } from "./admin-delivery-confirmation";
+import { AdminPersonalizationPreview } from "./admin-personalization-preview";
 import styles from "./admin-orders.module.css";
 
 export function OrderInspector({
@@ -37,30 +39,39 @@ export function OrderInspector({
       </p>
       <div className={styles.items}>
         {order.items.map((item) => (
-          <article className={styles.item} key={item.itemId}>
-            <div className={styles.itemImage}>
-              {item.image && (
-                <Image
-                  alt={item.image.alt}
-                  fill
-                  sizes="72px"
-                  src={item.image.url}
-                  unoptimized={shouldBypassImageOptimization(item.image.url)}
-                />
-              )}
-            </div>
-            <div>
-              <strong>{item.name}</strong>
-              <small>
-                Qty {item.quantity}
-                {item.customization ? " · Personalized" : ""}
-              </small>
-            </div>
-            <strong>{formatMoney(item.lineTotalCents, order.currency)}</strong>
-          </article>
+          <div className={styles.itemGroup} key={item.itemId}>
+            <article className={styles.item}>
+              <div className={styles.itemImage}>
+                {item.image && (
+                  <Image
+                    alt={item.image.alt}
+                    fill
+                    sizes="72px"
+                    src={item.image.url}
+                    unoptimized={shouldBypassImageOptimization(item.image.url)}
+                  />
+                )}
+              </div>
+              <div>
+                <strong>{item.name}</strong>
+                <small>
+                  Qty {item.quantity}
+                  {item.customization ? " · Personalized" : ""}
+                </small>
+              </div>
+              <strong>{formatMoney(item.lineTotalCents, order.currency)}</strong>
+            </article>
+            {item.customization && (
+              <AdminPersonalizationPreview
+                customization={item.customization}
+                orderId={order.id}
+              />
+            )}
+          </div>
         ))}
       </div>
       <FulfillmentProgress order={order} />
+      <AdminDeliveryConfirmation order={order} />
       <address className={styles.address}>
         <strong>Ship to</strong>
         <span>{addressLine(order)}</span>
@@ -98,7 +109,8 @@ function actionLabel(status: FulfillmentStatus): string {
   if (status === "confirmed") return "Confirm order";
   if (status === "processing") return "Start production";
   if (status === "shipped") return "Mark packed and dispatched";
-  if (status === "delivered") return "Mark delivered and paid";
+  if (status === "delivered")
+    return "Mark delivered; await customer confirmation";
   return `Mark ${statusLabel(status).toLowerCase()}`;
 }
 

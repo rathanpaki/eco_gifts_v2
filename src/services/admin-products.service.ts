@@ -10,10 +10,11 @@ export type ProductListLoad =
 
 export async function loadAdminProducts(query: Record<string, string | string[] | undefined>): Promise<ProductListLoad> {
   const params = new URLSearchParams();
-  for (const key of ["filter", "search", "cursor", "limit"] as const) {
+  for (const key of ["filter", "search", "page"] as const) {
     const value = query[key];
     if (typeof value === "string" && value) params.set(key, value);
   }
+  params.set("limit", "12");
   try {
     const response = await serverApi(`/admin/products?${params.toString()}`);
     if (!response.ok) return { kind: "unavailable" };
@@ -32,5 +33,18 @@ export async function loadAdminProduct(id: string): Promise<AdminProduct | null>
     return adminProductSchema.parse(await response.json());
   } catch {
     return null;
+  }
+}
+
+export async function loadAdminProductCategories(): Promise<string[]> {
+  try {
+    const response = await serverApi("/admin/products/categories");
+    if (!response.ok) return [];
+    const values: unknown = await response.json();
+    return Array.isArray(values)
+      ? values.filter((value): value is string => typeof value === "string")
+      : [];
+  } catch {
+    return [];
   }
 }

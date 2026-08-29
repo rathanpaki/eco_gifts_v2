@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { LogoDrawLoader } from "@/components/ui/logo-draw-loader";
 
 export function CheckoutLoading() {
-  return <main className="min-h-[60vh] bg-slate-50 px-5 py-12"><div className="mx-auto max-w-6xl animate-pulse space-y-5"><div className="h-9 w-64 rounded bg-slate-200" /><div className="grid gap-8 lg:grid-cols-2"><div className="h-80 rounded-2xl bg-slate-200" /><div className="h-80 rounded-2xl bg-slate-200" /></div></div></main>;
+  return <LogoDrawLoader className="bg-slate-50" label="Preparing checkout" size="page" />;
 }
 
 export function CheckoutUnavailable({ message, retry }: { message: string; retry: () => void }) {

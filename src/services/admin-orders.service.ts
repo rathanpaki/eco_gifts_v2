@@ -40,6 +40,15 @@ export async function getAdminOrder(orderId: string): Promise<AdminOrder> {
   return adminOrderSchema.parse(await response.json());
 }
 
+export function adminCustomizationPreviewUrl(
+  orderId: string,
+  customizationId: string,
+): string {
+  const order = encodeURIComponent(orderId);
+  const customization = encodeURIComponent(customizationId);
+  return `${clientApiBaseUrl}/api/admin/orders/${order}/customizations/${customization}/preview`;
+}
+
 export async function updateAdminOrderStatus(
   orderId: string,
   status: FulfillmentStatus,

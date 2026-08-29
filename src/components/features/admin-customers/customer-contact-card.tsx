@@ -12,8 +12,8 @@ export function CustomerContactCard({ customer }: { customer: AdminCustomer }) {
       />
       <Fact label="Marketing consent" value={consent(customer)} />
       <Fact
-        label="Account status"
-        value={customer.disabled ? "Disabled" : "Active"}
+        label="Preferred channel"
+        value={customer.email ? "Email" : "Not recorded"}
       />
     </section>
   );
@@ -30,8 +30,9 @@ function Fact({ label, value }: { label: string; value: string }) {
 
 function consent(customer: AdminCustomer): string {
   if (!customer.marketingOptIn) return "Not opted in";
-  if (!customer.marketingConsentUpdatedAt)
+  if (!customer.marketingConsentUpdatedAt) {
     return "Opted in · consent date unavailable";
+  }
   const date = new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(
     new Date(customer.marketingConsentUpdatedAt),
   );

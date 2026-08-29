@@ -6,6 +6,7 @@ import "@fontsource/inter/700.css";
 import "./globals.css";
 import "./auth.css";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { AppSplash } from "@/components/features/splash/app-splash";
 
 export const metadata: Metadata = {
   title: "EcoGifts | Thoughtfully crafted gifts",
@@ -15,7 +16,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     <html lang="en" data-scroll-behavior="smooth">
-      <body><QueryProvider>{children}</QueryProvider></body>
+      <body>
+        <QueryProvider>
+          <AppSplash />
+          {children}
+        </QueryProvider>
+      </body>
     </html>
   );
 }

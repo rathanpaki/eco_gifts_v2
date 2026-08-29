@@ -10,62 +10,48 @@ export interface AddressFormValues {
   countryCode: string;
   phone: string;
 }
-
 export type AddressErrors = Partial<Record<keyof AddressFormValues, string>>;
 
-interface CheckoutAddressFormProps {
+export function CheckoutAddressForm(props: {
   value: AddressFormValues;
   errors: AddressErrors;
   onChange: (value: AddressFormValues) => void;
-}
-
-export function CheckoutAddressForm({ value, errors, onChange }: CheckoutAddressFormProps) {
-  const update = (field: keyof AddressFormValues, next: string) => {
-    onChange({ ...value, [field]: next });
-  };
+}) {
+  const update = (field: keyof AddressFormValues, next: string) =>
+    props.onChange({ ...props.value, [field]: next });
   return (
-    <section className="rounded-2xl border border-slate-200 bg-white p-6 shadow-xs" aria-labelledby="delivery-address-title">
-      <div className="mb-5">
-        <h2 className="text-lg font-bold text-slate-900" id="delivery-address-title">Delivery address</h2>
-        <p className="mt-1 text-xs text-slate-500">Used only to fulfil and support this order.</p>
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field autoComplete="name" error={errors.fullName} label="Full name" value={value.fullName} onChange={(next) => update("fullName", next)} wide />
-        <Field autoComplete="address-line1" error={errors.addressLine1} label="Address line 1" value={value.addressLine1} onChange={(next) => update("addressLine1", next)} wide />
-        <Field autoComplete="address-line2" error={errors.addressLine2} label="Address line 2 (optional)" value={value.addressLine2} onChange={(next) => update("addressLine2", next)} wide />
-        <Field autoComplete="address-level2" error={errors.city} label="City" value={value.city} onChange={(next) => update("city", next)} />
-        <Field autoComplete="address-level1" error={errors.region} label="County / region (optional)" value={value.region} onChange={(next) => update("region", next)} />
-        <Field autoComplete="postal-code" error={errors.postalCode} label="Postal code" value={value.postalCode} onChange={(next) => update("postalCode", next)} />
-        <Field autoComplete="country" error={errors.countryCode} label="Country code" maxLength={2} value={value.countryCode} onChange={(next) => update("countryCode", next.toUpperCase())} />
-        <Field autoComplete="tel" error={errors.phone} label="Phone (optional)" value={value.phone} onChange={(next) => update("phone", next)} wide />
+    <section aria-labelledby="recipient-details-title">
+      <h3 id="recipient-details-title" className="mb-[18px] text-[13px] font-semibold text-[var(--muted)]">Recipient details</h3>
+      <div className="grid gap-x-4 sm:grid-cols-2">
+        <Field autoComplete="name" error={props.errors.fullName} label="Full name" value={props.value.fullName} onChange={(value) => update("fullName", value)} />
+        <Field autoComplete="tel" error={props.errors.phone} label="Phone number" placeholder="+44 7700 900000" value={props.value.phone} onChange={(value) => update("phone", value)} />
+        <Field autoComplete="address-line1" error={props.errors.addressLine1} label="Address" value={props.value.addressLine1} onChange={(value) => update("addressLine1", value)} wide />
+        <Field autoComplete="address-level2" error={props.errors.city} label="City" value={props.value.city} onChange={(value) => update("city", value)} />
+        <Field autoComplete="address-level1" error={props.errors.region} label="State / region (optional)" value={props.value.region} onChange={(value) => update("region", value)} />
+        <Field autoComplete="postal-code" error={props.errors.postalCode} label="Postcode" value={props.value.postalCode} onChange={(value) => update("postalCode", value)} />
+        <Field autoComplete="country" error={props.errors.countryCode} helper="Use the two-letter country code." label="Country code" maxLength={2} placeholder="GB" value={props.value.countryCode} onChange={(value) => update("countryCode", value.toUpperCase())} />
+        <Field autoComplete="address-line2" error={props.errors.addressLine2} helper="Shared only with the delivery partner." label="Delivery note (optional)" placeholder="Access instructions or safe-place note" value={props.value.addressLine2} onChange={(value) => update("addressLine2", value)} wide />
       </div>
     </section>
   );
 }
 
-interface FieldProps {
+function Field(props: {
   label: string;
   value: string;
   error?: string;
+  helper?: string;
+  placeholder?: string;
   autoComplete: string;
   maxLength?: number;
   wide?: boolean;
   onChange: (value: string) => void;
-}
-
-function Field({ label, value, error, autoComplete, maxLength, wide, onChange }: FieldProps) {
+}) {
   return (
-    <label className={wide ? "sm:col-span-2" : undefined}>
-      <span className="mb-1 block text-xs font-bold text-slate-700">{label}</span>
-      <input
-        autoComplete={autoComplete}
-        maxLength={maxLength ?? 120}
-        value={value}
-        onChange={(event) => onChange(event.target.value)}
-        aria-invalid={Boolean(error)}
-        className="min-h-11 w-full rounded-xl border border-slate-300 bg-white px-3.5 text-sm text-slate-900 outline-none focus:border-emerald-600 focus:ring-2 focus:ring-emerald-600/15"
-      />
-      {error ? <span className="mt-1 block text-[11px] text-red-700">{error}</span> : null}
+    <label className={`flex h-[120px] flex-col gap-2 ${props.wide ? "sm:col-span-2" : ""}`}>
+      <span className="text-[13px] font-semibold">{props.label}</span>
+      <input aria-invalid={Boolean(props.error)} autoComplete={props.autoComplete} maxLength={props.maxLength ?? 120} onChange={(event) => props.onChange(event.target.value)} placeholder={props.placeholder} value={props.value} className="h-12 w-full rounded-xl border border-[var(--line)] bg-[var(--page)] px-4 text-[15px] outline-none placeholder:text-[var(--muted)] focus:border-[var(--brand)]" />
+      <span className={`h-[18px] text-xs ${props.error ? "text-red-700" : "text-[var(--muted)]"}`}>{props.error ?? props.helper ?? " "}</span>
     </label>
   );
 }

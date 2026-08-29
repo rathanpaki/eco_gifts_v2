@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ShoppingBag } from "lucide-react";
+import { LogoDrawLoader } from "@/components/ui/logo-draw-loader";
 
 export function EmptyCart() {
   return (
@@ -23,13 +24,5 @@ export function CartUnavailable({ retry }: { retry: () => void }) {
 }
 
 export function CartSkeleton() {
-  return (
-    <main className="mx-auto max-w-[1296px] animate-pulse px-5 py-11 lg:px-8">
-      <div className="h-3 w-20 rounded bg-[var(--line)]" /><div className="mt-4 h-12 w-96 max-w-full rounded bg-[var(--line)]" />
-      <div className="mt-8 grid gap-10 lg:grid-cols-[minmax(0,1fr)_390px]">
-        <div className="space-y-4">{[1, 2].map((item) => <div className="h-40 rounded-[18px] bg-[var(--subtle)]" key={item} />)}</div>
-        <div className="h-80 rounded-[20px] bg-[var(--subtle)]" />
-      </div>
-    </main>
-  );
+  return <LogoDrawLoader label="Loading your bag" size="page" />;
 }

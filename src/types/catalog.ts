@@ -1,9 +1,7 @@
+import type { ProductOccasion } from "./product-occasion";
+
 export type CatalogSort =
-  | "featured"
-  | "newest"
-  | "price-asc"
-  | "price-desc"
-  | "name-asc";
+  "featured" | "newest" | "price-asc" | "price-desc" | "name-asc";
 
 export interface PublicProductImage {
   id: string;
@@ -18,6 +16,7 @@ export interface PublicProduct {
   shortDescription: string;
   description: string;
   category: string;
+  occasions: ProductOccasion[];
   priceCents: number;
   currency: string;
   stockQuantity: number;
@@ -34,21 +33,28 @@ export interface PublicProduct {
   featuredRank: number | null;
   createdAt: string;
   updatedAt: string;
+  savedCustomization?: { id: string; previewPath: string } | null;
 }
 
 export interface PublicProductPage {
   items: PublicProduct[];
   nextCursor: string | null;
+  page: number;
+  pageSize: number;
+  totalItems: number;
+  totalPages: number;
 }
 
 export interface PublicProductQuery {
   search?: string;
   category?: string;
+  occasion?: ProductOccasion;
   minPriceCents?: number;
   maxPriceCents?: number;
   personalizable?: boolean;
   sort?: CatalogSort;
   cursor?: string;
+  page?: number;
   limit?: number;
 }
 

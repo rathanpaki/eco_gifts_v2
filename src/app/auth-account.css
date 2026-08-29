@@ -1,0 +1,145 @@
+.auth-navbar {
+  align-items: center;
+  background: white;
+  border-bottom: 1px solid var(--line);
+  display: flex;
+  gap: 22px;
+  height: 72px;
+  justify-content: space-between;
+  padding: 0 max(40px, calc((100vw - 1280px) / 2));
+}
+.auth-navbar nav {
+  display: flex;
+  flex: 1;
+  gap: 6px;
+  justify-content: center;
+}
+.auth-navbar nav a,
+.auth-nav-link {
+  color: var(--ink);
+  font-size: 14px;
+  padding: 8px 12px;
+  text-decoration: none;
+}
+.auth-nav-link {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  color: var(--brand);
+  font-weight: 600;
+}
+.account-layout {
+  display: grid;
+  gap: 64px;
+  grid-template-columns: minmax(0, 620px) minmax(0, 516px);
+  margin: auto;
+  max-width: 1440px;
+  min-height: calc(100svh - 72px);
+  padding: 56px max(40px, calc((100vw - 1200px) / 2));
+}
+.account-form,
+.benefit-card,
+.recovery-preview,
+.recovery-card {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+}
+.account-form {
+  padding: 24px 40px;
+}
+.auth-kicker {
+  color: var(--brand);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin: 0 !important;
+  text-transform: uppercase;
+}
+.account-form h1 {
+  font-size: 38px;
+  margin: 18px 0 12px;
+}
+.account-form form {
+  display: grid;
+  gap: 12px;
+  margin-top: 18px;
+}
+.marketing-consent {
+  align-items: flex-start;
+  color: var(--muted);
+  display: flex;
+  font-size: 12px;
+  gap: 10px;
+  line-height: 18px;
+}
+.marketing-consent input {
+  accent-color: var(--brand);
+  height: 20px;
+  width: 20px;
+}
+.account-aside {
+  display: grid;
+  align-content: start;
+  gap: 20px;
+}
+.benefit-card {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: white;
+  padding: 30px;
+}
+.benefit-card .auth-kicker {
+  color: white;
+}
+.benefit-card h2 {
+  font-size: 30px;
+  font-weight: 400;
+  line-height: 1.1;
+  margin: 18px 0;
+}
+.benefit {
+  align-items: center;
+  display: flex;
+  font-size: 13px;
+  gap: 10px;
+  margin: 12px 0;
+}
+.recovery-preview {
+  background: #eef4ee;
+  padding: 28px 30px;
+}
+.recovery-preview h2 {
+  font-size: 26px;
+  font-weight: 400;
+  margin: 14px 0;
+}
+.recovery-preview > p:not(.auth-kicker) {
+  color: #616861;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.recovery-preview a {
+  display: block;
+  font-size: 13px;
+  margin-top: 16px;
+}
+.recovery-page {
+  display: grid;
+  min-height: calc(100svh - 72px);
+  place-items: center;
+  padding: 40px 20px;
+}
+.recovery-card {
+  background: #eef4ee;
+  max-width: 516px;
+  padding: 30px;
+  width: 100%;
+}
+.recovery-card h1 {
+  font-size: 32px;
+  margin: 14px 0;
+}
+.recovery-card form {
+  display: grid;
+  gap: 14px;
+  margin-top: 24px;
+}

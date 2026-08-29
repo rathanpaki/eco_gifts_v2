@@ -6,6 +6,7 @@ const apiOrigin = new URL(
 
 const nextConfig: NextConfig = {
   images: {
+    localPatterns: [{ pathname: "/images/**" }],
     remotePatterns: [
       { protocol: "https", hostname: "firebasestorage.googleapis.com" },
       { protocol: "https", hostname: "storage.googleapis.com" },

@@ -5,28 +5,24 @@
   display: flex;
   flex-direction: column;
   gap: 22px;
+  margin-inline: auto;
 }
-
-.header,
-.cardHeader {
+.header {
   display: flex;
   justify-content: space-between;
   gap: 20px;
   align-items: flex-start;
 }
-
 .header h1,
 .state h1 {
   margin: 0;
   font: 32px/1.1 var(--font-serif), serif;
 }
-
 .header p {
   color: #8a918a;
   font-size: 12px;
   margin: 6px 0 0;
 }
-
 .period {
   border: 1px solid #e3e0d8;
   border-radius: 10px;
@@ -34,99 +30,38 @@
   font-size: 13px;
   white-space: nowrap;
 }
-
-.kpis {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.metric {
-  border: 1px solid #e3e0d8;
-  border-radius: 14px;
-  padding: 18px;
-}
-
-.metricgreen { background: #eef4ee; }
-.metricsubtle { background: #f2efe7; }
-.metricpeach { background: #f7eee7; }
-.metricplain { background: #faf8f3; }
-.metric p { color: #8a918a; font-size: 11px; font-weight: 600; margin: 0; }
-.metric h2 { font: 26px/1 var(--font-serif), serif; margin: 11px 0; }
-.metric strong { color: #3d5540; font-size: 11px; }
-.metricplain strong { color: #8a918a; }
-
 .middle {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 360px;
   gap: 18px;
 }
-
-.card,
-.orders {
-  border: 1px solid #e3e0d8;
-  border-radius: 16px;
-  background: #faf8f3;
-  padding: 20px;
+.state {
+  max-width: 520px;
+  margin: auto;
+  padding: 48px 28px;
 }
-
-.card h2,
-.orders h2,
-.attention h2 { font: 20px/1.1 var(--font-serif), serif; margin: 0; }
-.cardHeader strong { color: #3d5540; font-size: 12px; }
-
-.chart {
-  height: 170px;
-  display: flex;
-  gap: 18px;
-  align-items: end;
-  margin-top: 16px;
+.state .operation {
+  color: #3d5540;
+  margin-bottom: 12px;
 }
-
-.barColumn {
-  height: 100%;
-  width: 70px;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
-  align-items: center;
-  gap: 7px;
+.state p:last-child {
+  color: #777d77;
+  line-height: 1.6;
 }
-
-.bar { width: 36px; min-height: 3px; background: #3d5540; border-radius: 7px 7px 0 0; }
-.barColumn small { color: #8a918a; font-size: 11px; }
-.attention { min-height: 290px; background: #f2efe7; border-radius: 16px; padding: 20px; }
-.attentionRow { border-top: 1px solid #e3e0d8; display: flex; align-items: center; justify-content: space-between; padding: 12px 0; font-size: 13px; }
-.attentionRow:first-of-type { margin-top: 10px; }
-.badge { border-radius: 999px; display: inline-flex; align-items: center; gap: 8px; padding: 7px 12px; font-size: 12px; font-weight: 600; white-space: nowrap; }
-.badge i { width: 8px; height: 8px; border-radius: 50%; background: currentcolor; }
-.badgeSuccess { background: #eef4ee; color: #56825a; }
-.badgeWarning { background: #f7eee7; color: #c98b3c; }
-.badgeError { border: 1px solid #b95c5c; color: #b95c5c; }
-.orders { min-height: 180px; }
-.orders .cardHeader > span { color: #8a918a; font-size: 12px; }
-.tableWrap table { width: 100%; border-collapse: collapse; font-size: 13px; }
-.tableWrap th,
-.tableWrap td { border-bottom: 1px solid #e3e0d8; padding: 12px 8px; text-align: left; }
-.tableWrap th { color: #8a918a; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; }
-.empty { color: #8a918a; font-size: 13px; margin: 28px 0; }
-.state { max-width: 520px; margin: auto; padding: 48px 28px; }
-.state .operation { color: #3d5540; margin-bottom: 12px; }
-.state p:last-child { color: #777d77; line-height: 1.6; }
-
 @media (max-width: 1000px) {
   .content { padding: 24px; }
-  .kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .middle { grid-template-columns: 1fr; }
-  .attention { min-height: 0; }
 }
-
 @media (max-width: 640px) {
-  .content { padding: 24px 16px; }
+  .content {
+    gap: 16px;
+    padding: 22px 14px 32px;
+  }
   .header { display: block; }
-  .period { display: inline-block; margin-top: 16px; }
-  .kpis { grid-template-columns: 1fr 1fr; gap: 10px; }
-  .metric { padding: 14px; }
-  .tableWrap { overflow: auto; }
-  .orders table { min-width: 560px; }
+  .header h1 { font-size: 29px; }
+  .period {
+    display: inline-block;
+    margin-top: 16px;
+  }
+  .state { padding: 36px 18px; }
 }

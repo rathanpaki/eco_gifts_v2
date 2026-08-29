@@ -1,4 +1,8 @@
-import type { AdminProduct, ProductFormValues, ProductWritePayload } from "@/types/admin-product";
+import type {
+  AdminProduct,
+  ProductFormValues,
+  ProductWritePayload,
+} from "@/types/admin-product";
 import { STORE_CURRENCY } from "@/constants/store";
 
 export function formValues(product?: AdminProduct): ProductFormValues {
@@ -7,6 +11,7 @@ export function formValues(product?: AdminProduct): ProductFormValues {
     shortDescription: product?.shortDescription ?? "",
     description: product?.description ?? "",
     category: product?.category ?? "",
+    occasions: product?.occasions ?? [],
     sku: product?.sku ?? "",
     price: product ? (product.priceCents / 100).toFixed(2) : "",
     currency: product?.currency ?? STORE_CURRENCY,
@@ -29,6 +34,7 @@ export function productPayload(
     shortDescription: values.shortDescription,
     description: values.description,
     category: values.category,
+    occasions: values.occasions,
     sku: values.sku,
     priceCents: Math.round(Number(values.price) * 100),
     currency: values.currency,

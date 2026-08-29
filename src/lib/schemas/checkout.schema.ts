@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { cartItemSchema } from "./cart.schema";
+import { promotionDiscountSchema } from "./promotions.schema";
 
 const money = z.number().int().nonnegative();
 const packagingId = z.enum([
@@ -7,7 +8,13 @@ const packagingId = z.enum([
   "seed-paper-wrap",
   "zero-waste-cloth",
 ]);
-const deliveryId = z.enum(["standard", "green-logistics"]);
+const deliveryId = z.enum(["standard", "express", "green-logistics"]);
+const paymentMethod = z.enum(["pay_on_delivery", "demo_card"]);
+const contributionCause = z.enum([
+  "Tree Planting",
+  "Carbon Offset",
+  "Wildlife Conservation",
+]);
 
 const packagingSchema = z.object({
   id: packagingId,
@@ -38,6 +45,19 @@ const impactSchema = z.object({
   estimated: z.literal(true),
 });
 
+const ecoContributionSchema = z.object({
+  cause: contributionCause,
+  amountCents: money.min(100).max(50_000),
+  rewardPointsEarned: money,
+  treeId: z.string().min(1).nullable(),
+});
+
+const rewardDiscountSchema = z.object({
+  voucherId: z.string().min(1).max(128),
+  code: z.string().min(1),
+  amountCents: money,
+});
+
 export const deliveryAddressSchema = z.object({
   fullName: z.string().trim().min(2).max(100),
   addressLine1: z.string().trim().min(3).max(120),
@@ -53,8 +73,11 @@ export const deliveryAddressSchema = z.object({
   phone: z
     .string()
     .trim()
-    .regex(/^\+?[0-9 ()-]{7,24}$/)
-    .optional(),
+    .regex(/^\+?[0-9 ()-]{7,24}$/),
+});
+
+const orderAddressSchema = deliveryAddressSchema.extend({
+  phone: deliveryAddressSchema.shape.phone.nullable(),
 });
 
 export const checkoutQuoteSchema = z.object({
@@ -64,9 +87,13 @@ export const checkoutQuoteSchema = z.object({
   packaging: packagingSchema,
   delivery: deliverySchema,
   subtotalCents: money,
+  personalizationCents: money,
   totalCents: money,
   currency: z.string().regex(/^[A-Z]{3}$/),
   impact: impactSchema,
+  ecoContribution: ecoContributionSchema.nullable(),
+  rewardDiscount: rewardDiscountSchema.nullable(),
+  promotionDiscount: promotionDiscountSchema.nullable(),
   paymentMethod: z.literal("pay_on_delivery"),
 });
 
@@ -86,6 +113,7 @@ const orderItemSchema = z.object({
       previewPath: z
         .string()
         .regex(/^\/api\/customizations\/[A-Za-z0-9_-]+\/preview$/),
+      text: z.string().max(120).nullable(),
     })
     .nullable(),
 });
@@ -98,6 +126,11 @@ export const fulfillmentStatusSchema = z.enum([
   "delivered",
   "cancelled",
 ]);
+export const deliveryConfirmationStatusSchema = z.enum([
+  "not_ready",
+  "awaiting_customer",
+  "confirmed",
+]);
 
 const orderTimelineEventSchema = z.object({
   id: z.string().min(1).max(128),
@@ -109,16 +142,22 @@ export const orderSchema = z.object({
   id: z.string().min(20).max(64),
   orderNumber: z.string().min(1),
   items: z.array(orderItemSchema).min(1),
-  address: deliveryAddressSchema,
+  address: orderAddressSchema,
   packaging: packagingSchema,
   delivery: deliverySchema,
   impact: impactSchema,
+  ecoContribution: ecoContributionSchema.nullable(),
+  rewardDiscount: rewardDiscountSchema.nullable(),
+  promotionDiscount: promotionDiscountSchema.nullable(),
   subtotalCents: money,
+  personalizationCents: money,
   totalCents: money,
   currency: z.string().regex(/^[A-Z]{3}$/),
-  paymentMethod: z.literal("pay_on_delivery"),
+  paymentMethod,
   paymentStatus: z.enum(["pending", "paid", "failed", "refunded"]),
   fulfillmentStatus: fulfillmentStatusSchema,
+  deliveryConfirmationStatus: deliveryConfirmationStatusSchema,
+  deliveryConfirmedAt: z.string().datetime().nullable(),
   history: z.array(orderTimelineEventSchema).max(100),
   createdAt: z.string().datetime(),
 });
@@ -134,6 +173,8 @@ export const orderHistoryPageSchema = z.object({
       currency: z.string().regex(/^[A-Z]{3}$/),
       paymentStatus: z.enum(["pending", "paid", "failed", "refunded"]),
       fulfillmentStatus: fulfillmentStatusSchema,
+      deliveryConfirmationStatus: deliveryConfirmationStatusSchema,
+      deliveryConfirmedAt: z.string().datetime().nullable(),
       estimatedDelivery: z.string().min(1),
       impact: impactSchema,
       createdAt: z.string().datetime(),

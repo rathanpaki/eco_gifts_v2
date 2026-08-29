@@ -10,8 +10,29 @@ const steps = [
 
 export function Process() {
   return (
-    <section className="bg-[var(--subtle)] py-20">
-      <div className="shell text-center"><p className="eyebrow">Simple process</p><h2 className="section-title mt-3">How EcoGifts works</h2><ol className="mt-12 grid gap-8 sm:grid-cols-2 lg:grid-cols-5">{steps.map(([Icon, title, text], index) => <li key={title} className="flex flex-col items-center"><span className="grid size-14 place-items-center rounded-full border border-[var(--line)] bg-white text-[var(--brand)]"><Icon size={22} /></span><span className="mt-3 text-[11px] text-[var(--muted)]">0{index + 1}</span><h3 className="mt-3 text-sm font-semibold">{title}</h3><p className="mt-2 text-xs leading-5 text-[var(--muted)]">{text}</p></li>)}</ol></div>
+    <section className="bg-[var(--subtle)] py-12 md:py-20">
+      <div className="shell text-left md:text-center">
+        <p className="eyebrow">Simple process</p>
+        <h2 className="section-title mt-3">How EcoGifts works</h2>
+        <ol className="mt-8 grid gap-6 md:mt-12 md:grid-cols-2 md:gap-8 lg:grid-cols-5">
+          {steps.map(([Icon, title, text], index) => (
+            <li key={title} className="flex items-start gap-4 md:flex-col md:items-center">
+              <span className="grid size-12 shrink-0 place-items-center rounded-full border border-[var(--line)] bg-white text-[var(--brand)] md:size-14">
+                <Icon size={22} />
+              </span>
+              <span className="min-w-0 md:contents">
+                <span className="text-[11px] font-semibold text-[var(--brand)] md:mt-3">
+                  0{index + 1}
+                </span>
+                <h3 className="mt-1 text-sm font-semibold md:mt-3">{title}</h3>
+                <p className="mt-1 text-xs leading-5 text-[var(--muted)] md:mt-2">
+                  {text}
+                </p>
+              </span>
+            </li>
+          ))}
+        </ol>
+      </div>
     </section>
   );
 }

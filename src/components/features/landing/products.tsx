@@ -1,9 +1,14 @@
 import Link from "next/link";
 import { ProductGrid } from "@/components/features/catalog/product-grid";
 import { getFeaturedProducts } from "@/services/catalog.service";
+import { cookies } from "next/headers";
 
 export async function Products() {
-  const products = await getFeaturedProducts();
+  const [products, cookieStore] = await Promise.all([
+    getFeaturedProducts(),
+    cookies(),
+  ]);
+  const signedIn = cookieStore.has(process.env.SESSION_COOKIE_NAME ?? "session");
 
   return (
     <section id="shop" className="bg-white/40 py-20">
@@ -14,7 +19,7 @@ export async function Products() {
         </div>
         {products.length ? (
           <>
-            <ProductGrid products={products} />
+            <ProductGrid products={products} signedIn={signedIn} />
             <div className="mt-8 text-center">
               <Link href="/shop" className="inline-flex rounded-full border border-[var(--brand)] px-5 py-3 text-sm font-semibold text-[var(--brand)]">
                 Explore all gifts

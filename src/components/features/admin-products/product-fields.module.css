@@ -1,0 +1,99 @@
+.fields {
+  min-height: 610px;
+  display: grid;
+  align-content: start;
+  gap: 16px;
+}
+.fields h2 {
+  margin: 0 0 2px;
+  font:
+    22px/1.2 var(--font-serif),
+    serif;
+}
+.field {
+  display: grid;
+  gap: 8px;
+}
+.field strong {
+  font-size: 13px;
+}
+.field input,
+.field textarea {
+  width: 100%;
+  border: 1px solid #e3e0d8;
+  border-radius: 12px;
+  background: #faf8f3;
+  color: #252a26;
+  padding: 12px 16px;
+  font:
+    15px/1.4 var(--font-sans),
+    sans-serif;
+}
+.field input {
+  height: 48px;
+}
+.field textarea {
+  resize: vertical;
+}
+.field small {
+  min-height: 18px;
+  color: #8a918a;
+  font-size: 12px;
+}
+.twoColumns {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.check {
+  min-height: 58px;
+  border-radius: 12px;
+  background: #eef4ee;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+}
+.check input {
+  width: 18px;
+  height: 18px;
+  accent-color: #3d5540;
+}
+.check span {
+  display: grid;
+  gap: 5px;
+}
+.check strong {
+  font-size: 13px;
+}
+.check small {
+  color: #6f776f;
+  font-size: 12px;
+}
+.upload {
+  min-height: 180px;
+  border: 1px dashed #8a918a;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: 8px;
+  padding: 24px;
+  text-align: center;
+  cursor: pointer;
+}
+.upload span {
+  color: #8a918a;
+  font-size: 12px;
+}
+.upload input {
+  margin-top: 8px;
+  max-width: 100%;
+}
+
+@media (max-width: 700px) {
+  .twoColumns {
+    grid-template-columns: 1fr;
+  }
+}

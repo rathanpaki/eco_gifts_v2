@@ -1,17 +1,27 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, ImageIcon } from "lucide-react";
+import { ImageIcon } from "lucide-react";
 import { shouldBypassImageOptimization } from "@/lib/image-source";
 import type { PublicProduct } from "@/types/catalog";
 import { ProductCardCartButton } from "./product-card-cart-button";
+import { ProductCardWishlistButton } from "./product-card-wishlist-button";
 
-export function ProductCard({ product, eager = false }: { product: PublicProduct; eager?: boolean }) {
+export function ProductCard({
+  product,
+  eager = false,
+  signedIn = false,
+}: {
+  product: PublicProduct;
+  eager?: boolean;
+  signedIn?: boolean;
+}) {
   const image = product.images[0];
 
   return (
-    <article className="card flex min-w-0 flex-col p-4">
-      <Link href={`/shop/${product.slug}`} className="group block">
-        <div className="relative aspect-[4/3] overflow-hidden rounded-xl bg-[var(--subtle)]">
+    <article className="card group flex h-[317px] w-[282px] shrink-0 snap-start flex-col gap-2 p-4 sm:w-auto">
+      <div className="relative">
+      <Link href={`/shop/${product.slug}`} className="block">
+        <div className="relative h-[190px] overflow-hidden rounded-xl bg-[var(--subtle)]">
           {image ? (
             <Image
               src={image.url}
@@ -29,21 +39,30 @@ export function ProductCard({ product, eager = false }: { product: PublicProduct
             </span>
           )}
         </div>
-        <p className="mt-3 text-[11px] font-semibold text-[var(--brand)]">
-          eco {product.ecoScore}/100
-        </p>
-        <h2 className="mt-1 line-clamp-2 min-h-12 text-base font-semibold leading-6">
-          {product.name}
-        </h2>
       </Link>
-      <div className="mt-auto flex items-center justify-between gap-3 pt-2 text-sm font-semibold text-[var(--brand)]">
+      <ProductCardWishlistButton
+        productId={product.id}
+        productName={product.name}
+        productSlug={product.slug}
+        signedIn={signedIn}
+      />
+      </div>
+      <p className="text-[11px] font-semibold leading-[17px] text-[var(--brand)]">
+        eco {product.ecoScore}/100
+      </p>
+      <Link
+        href={`/shop/${product.slug}`}
+        className="truncate text-base font-semibold leading-6"
+      >
+        {product.name}
+      </Link>
+      <div className="mt-auto flex h-6 items-center justify-between gap-3 text-sm font-semibold text-[var(--brand)]">
         <span>{formatPrice(product.priceCents, product.currency)}</span>
-        <span className="flex items-center gap-2">
-          <Link href={`/shop/${product.slug}`} className="inline-flex items-center gap-1">
-            {product.inStock ? <><span>View gift</span><ArrowRight aria-hidden="true" size={14} /></> : "Out of stock"}
-          </Link>
-          <ProductCardCartButton productId={product.id} productName={product.name} disabled={!product.inStock} />
-        </span>
+        <ProductCardCartButton
+          productId={product.id}
+          productName={product.name}
+          disabled={!product.inStock}
+        />
       </div>
     </article>
   );

@@ -1,4 +1,5 @@
 import type { z } from "zod";
+import type { ProductOccasion } from "./product-occasion";
 import type {
   adminProductPageSchema,
   adminProductSchema,
@@ -15,6 +16,7 @@ export type ProductWritePayload = {
   shortDescription: string;
   description: string;
   category: string;
+  occasions: ProductOccasion[];
   sku: string;
   priceCents: number;
   currency: string;

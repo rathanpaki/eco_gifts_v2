@@ -1,0 +1,117 @@
+.preview {
+  min-height: 640px;
+  border-radius: 16px;
+  background: #f2efe7;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.preview .eyebrow {
+  margin: 0;
+  color: #8a918a;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  text-transform: uppercase;
+}
+.previewImage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 19 / 15;
+  border-radius: 14px;
+  background: #e3e0d8;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  color: #777d77;
+  font-size: 12px;
+  text-align: center;
+}
+.previewImage img {
+  object-fit: cover;
+}
+.preview h2 {
+  margin: 0;
+  font:
+    24px/1.2 var(--font-serif),
+    serif;
+}
+.preview > strong {
+  font-size: 16px;
+}
+.preview > p:not(.eyebrow, .eco) {
+  margin: 0;
+  color: #8a918a;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.preview .eco {
+  margin: 0;
+  color: #3d5540;
+  font-size: 12px;
+  font-weight: 600;
+}
+.uploadQueue {
+  display: grid;
+  gap: 8px;
+  font-size: 12px;
+}
+.uploadQueue > div {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+.uploadQueue img {
+  flex: 0 0 auto;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.mediaList {
+  max-height: 368px;
+  overflow-y: auto;
+  border-top: 1px solid #d6d3ca;
+  padding-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+.mediaList div {
+  display: grid;
+  grid-template-columns: 56px 54px 1fr;
+  align-items: center;
+  gap: 10px;
+}
+.mediaList img {
+  border-radius: 8px;
+  object-fit: cover;
+}
+.mediaList small {
+  color: #6f776f;
+  font-size: 10px;
+}
+.mediaList div > span {
+  display: flex;
+  gap: 8px;
+}
+.mediaList button {
+  border: 0;
+  background: transparent;
+  color: #3d5540;
+  font-size: 11px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.mediaList button:last-child {
+  color: #b95c5c;
+}
+.mediaList button:disabled {
+  cursor: not-allowed;
+  opacity: 0.45;
+}
+
+@media (max-width: 1050px) {
+  .preview {
+    min-height: auto;
+  }
+}

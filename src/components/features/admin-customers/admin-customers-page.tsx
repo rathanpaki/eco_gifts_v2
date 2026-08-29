@@ -24,7 +24,6 @@ export function AdminCustomersPage() {
   const result = useAdminCustomers(query);
   const customers = result.data?.pages.flatMap((page) => page.items) ?? [];
   const metrics = result.data?.pages[0]?.metrics;
-
   const exportCsv = async () => {
     setExporting(true);
     setExportError(null);
@@ -75,7 +74,9 @@ export function AdminCustomersPage() {
           <CustomerFilters
             draft={draft}
             onDraftChange={setDraft}
-            onSubmit={() => setQuery({ ...draft, search: draft.search.trim() })}
+            onSubmit={(value = draft) =>
+              setQuery({ ...value, search: value.search.trim() })
+            }
           />
           <CustomerTable customers={customers} />
           <footer className={styles.footer}>
@@ -83,15 +84,21 @@ export function AdminCustomersPage() {
               Customer data is limited to fulfillment, support, and recorded
               consent.
             </p>
-            {result.hasNextPage && (
-              <button
-                disabled={result.isFetchingNextPage}
-                onClick={() => void result.fetchNextPage()}
-                type="button"
-              >
-                {result.isFetchingNextPage ? "Loading…" : "Load next page"}
-              </button>
-            )}
+            <div className={styles.pagination}>
+              <span>
+                {customers.length ? "1" : "0"}–{customers.length} of{" "}
+                {metrics.totalCustomers.toLocaleString()}
+              </span>
+              {result.hasNextPage && (
+                <button
+                  disabled={result.isFetchingNextPage}
+                  onClick={() => void result.fetchNextPage()}
+                  type="button"
+                >
+                  {result.isFetchingNextPage ? "Loading…" : "Next"}
+                </button>
+              )}
+            </div>
           </footer>
         </>
       )}

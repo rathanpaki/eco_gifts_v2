@@ -8,6 +8,10 @@ export function CustomerDetailHeader({
 }: {
   customer: AdminCustomer;
 }) {
+  const rewardTarget = Math.max(
+    500,
+    Math.ceil((customer.rewardPoints + 1) / 500) * 500,
+  );
   const cards = [
     [
       "Lifetime value",
@@ -22,14 +26,14 @@ export function CustomerDetailHeader({
     [
       "EcoPoints",
       customer.rewardPoints.toLocaleString(),
-      "Recorded reward balance",
+      `Next reward at ${rewardTarget.toLocaleString()}`,
     ],
     [
-      "Support notes",
+      "Support contacts",
       customer.notes.length.toString(),
       customer.notes[0]
-        ? `Last note ${date(customer.notes[0].createdAt)}`
-        : "No notes recorded",
+        ? `Last contact ${date(customer.notes[0].createdAt)}`
+        : "No support contacts",
     ],
   ];
   return (
@@ -73,6 +77,7 @@ function date(value: string): string {
     new Date(value),
   );
 }
+
 function impact(grams: number): string {
   return grams >= 1000 ? `${(grams / 1000).toFixed(1)}kg` : `${grams}g`;
 }

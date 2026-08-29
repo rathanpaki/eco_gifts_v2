@@ -1,5 +1,6 @@
 import { useAdminOrder } from "@/hooks/use-admin-orders";
 import type { FulfillmentStatus } from "@/types/checkout";
+import { LogoDrawLoader } from "@/components/ui/logo-draw-loader";
 import { OrderInspector } from "./order-inspector";
 import styles from "./admin-orders.module.css";
 
@@ -15,12 +16,7 @@ export function InspectorState({
   pending: boolean;
 }) {
   if (detail.isLoading)
-    return (
-      <aside
-        className={styles.inspectorSkeleton}
-        aria-label="Loading order details"
-      />
-    );
+    return <LogoDrawLoader label="Loading order details" />;
   if (detail.isError)
     return (
       <aside className={styles.inspectorState}>
@@ -49,13 +45,7 @@ export function InspectorState({
 }
 
 export function OrdersSkeleton() {
-  return (
-    <div className={styles.skeleton} aria-label="Loading orders">
-      <span />
-      <span />
-      <span />
-    </div>
-  );
+  return <LogoDrawLoader label="Loading orders" />;
 }
 
 export function OrdersError({

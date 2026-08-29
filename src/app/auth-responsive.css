@@ -1,0 +1,105 @@
+@media (max-width: 1050px) {
+  .sign-in-layout {
+    grid-template-columns: 1fr;
+  }
+  .brand-story {
+    display: none;
+  }
+  .sign-in-panel {
+    min-height: 100svh;
+  }
+  .account-layout {
+    grid-template-columns: 1fr;
+    max-width: 720px;
+  }
+  .account-aside {
+    grid-template-columns: 1fr 1fr;
+  }
+  .auth-navbar nav {
+    display: none;
+  }
+  .auth-split-panel {
+    min-height: 100svh;
+  }
+}
+@media (max-width: 640px) {
+  .sign-in-panel {
+    padding: 36px 0;
+    width: calc(100% - 36px);
+  }
+  .sign-in-panel h1 {
+    font-size: 38px;
+  }
+  .auth-navbar {
+    padding: 0 18px;
+  }
+  .account-layout {
+    padding: 28px 14px;
+  }
+  .account-form,
+  .recovery-card {
+    padding: 24px;
+  }
+  .account-form h1 {
+    font-size: 34px;
+  }
+  .account-aside {
+    grid-template-columns: 1fr;
+  }
+  .benefit-card,
+  .recovery-preview {
+    padding: 24px;
+  }
+  .auth-split-panel {
+    min-height: 100svh;
+    padding: 26px 0 32px;
+    width: calc(100% - 40px);
+  }
+  .auth-form-content {
+    margin-top: 24px;
+  }
+  .auth-form-content h1 {
+    font-size: 34px;
+    line-height: 1.04;
+  }
+  .auth-lead {
+    font-size: 14px;
+    line-height: 20px;
+  }
+  .auth-tabs {
+    display: none;
+  }
+  .auth-main-form {
+    gap: 16px;
+    margin-top: 24px;
+  }
+  .auth-input-control,
+  .auth-primary,
+  .auth-secondary {
+    min-height: 48px;
+  }
+  .remember-row,
+  .terms-row {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 10px 16px;
+  }
+  .terms-row span {
+    padding-left: 23px;
+  }
+  .auth-form-content--signup {
+    margin-top: 20px;
+  }
+  .auth-form-content--signup .auth-main-form {
+    gap: 15px;
+    margin-top: 24px;
+  }
+  .auth-legal {
+    margin-top: 18px;
+  }
+}
+@media (max-width: 380px) {
+  .remember-row {
+    display: grid;
+  }
+}

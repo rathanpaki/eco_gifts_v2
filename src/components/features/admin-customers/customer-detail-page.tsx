@@ -2,15 +2,14 @@
 
 import Link from "next/link";
 import { useAdminCustomer } from "@/hooks/use-admin-customers";
+import { LogoDrawLoader } from "@/components/ui/logo-draw-loader";
 import { CustomerDetailView } from "./customer-detail-view";
 import styles from "./customer-detail.module.css";
 
 export function CustomerDetailPage({ customerId }: { customerId: string }) {
   const result = useAdminCustomer(customerId);
   if (result.isLoading)
-    return (
-      <div className={styles.detailLoading} aria-label="Loading customer" />
-    );
+    return <LogoDrawLoader label="Loading customer" />;
   if (result.isError || !result.data) {
     return (
       <section className={styles.state} role="alert">
