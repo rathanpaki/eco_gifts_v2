@@ -3,7 +3,7 @@ import type { TreeIDRecord } from "@/types/contribution.types";
 
 export function TreeEvidenceList({ trees }: { trees: TreeIDRecord[] }) {
   return (
-    <section className="rounded-2xl border border-[var(--line)] bg-white p-4 sm:p-6">
+    <section className="glass-panel rounded-2xl p-4 sm:p-6">
       <div className="flex items-start gap-3 sm:items-center">
         <span className="grid size-10 place-items-center rounded-xl bg-[#eef4ee] text-[var(--brand)]">
           <Trees size={20} />

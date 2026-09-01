@@ -67,7 +67,7 @@ function PackagingChoice({
   return (
     <button
       aria-checked={selected}
-      className={`flex h-44 flex-col rounded-2xl border p-3.5 text-left transition ${selected ? "border-[1.5px] border-[var(--brand)] bg-[#eef4ee]" : "border-[var(--muted)] bg-[var(--page)] hover:border-[var(--brand)]"}`}
+      className={`interactive-card glass-soft flex h-44 flex-col rounded-2xl p-3.5 text-left ${selected ? "ring-2 ring-[var(--brand)]" : "hover:ring-1 hover:ring-[var(--brand)]"}`}
       onClick={onSelect}
       role="radio"
       type="button"

@@ -5,5 +5,11 @@ import { getActivePromotions } from '@/services/promotions.service';
 
 export const promotionsKey = ['promotions', 'active'] as const;
 export function useActivePromotions() {
-  return useQuery({ queryKey: promotionsKey, queryFn: getActivePromotions, staleTime: 60_000 });
+  return useQuery({
+    queryKey: promotionsKey,
+    queryFn: getActivePromotions,
+    staleTime: 30_000,
+    refetchInterval: 60_000,
+    refetchOnWindowFocus: true,
+  });
 }

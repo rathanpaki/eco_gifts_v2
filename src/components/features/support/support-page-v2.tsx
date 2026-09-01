@@ -15,30 +15,6 @@ const questions = [
   "What can I return?",
 ] as const;
 
-const states = [
-  {
-    title: "Your wishlist is empty",
-    copy: "Save gifts to compare them later.",
-    action: "Explore gifts",
-    href: "/shop",
-    error: false,
-  },
-  {
-    title: "You’re offline",
-    copy: "Check your connection. Your cart is safely saved.",
-    action: "Try again",
-    href: "/help",
-    error: false,
-  },
-  {
-    title: "Payment wasn’t completed",
-    copy: "No charge was made. Review your details or choose another method.",
-    action: "Review payment",
-    href: "/checkout",
-    error: true,
-  },
-] as const;
-
 export function SupportPage() {
   return (
     <main className="min-h-[calc(100vh-64px)] bg-[var(--page)] px-5 pb-16 pt-8 sm:min-h-[calc(100vh-72px)] sm:px-6 sm:pt-11">
@@ -103,7 +79,7 @@ export function SupportPage() {
             </div>
           </section>
 
-          <aside className="min-h-[330px] rounded-[18px] bg-[#eef4ee] p-6">
+          <aside id="order-support" className="min-h-[330px] scroll-mt-28 rounded-[18px] bg-[#eef4ee] p-6">
             <h2 className="serif text-[26px]">Still need help?</h2>
             <p className="mt-4 text-sm text-[var(--muted)]">
               Our gifting team replies within one business day.
@@ -117,29 +93,6 @@ export function SupportPage() {
           </aside>
         </div>
 
-        <section className="mt-7 grid gap-4 lg:grid-cols-3">
-          {states.map((state) => (
-            <article
-              className={`min-h-32 rounded-2xl border p-5 ${state.error ? "border-[#cf5454]" : "border-[var(--line)] bg-[var(--subtle)]"}`}
-              key={state.title}
-            >
-              <h2
-                className={`serif text-lg ${state.error ? "text-[#c65353]" : ""}`}
-              >
-                {state.title}
-              </h2>
-              <p className="mt-3 text-[13px] text-[var(--muted)]">
-                {state.copy}
-              </p>
-              <Link
-                href={state.href}
-                className={`mt-2 inline-block text-[13px] font-semibold ${state.error ? "text-[#c65353]" : "text-[var(--brand)]"}`}
-              >
-                {state.action}
-              </Link>
-            </article>
-          ))}
-        </section>
       </div>
     </main>
   );

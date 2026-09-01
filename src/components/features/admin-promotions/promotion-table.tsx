@@ -2,16 +2,29 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { toast } from "sonner";
+import { useAppDialog } from "@/components/providers/feedback-provider";
 import { useDeleteAdminPromotion } from "@/hooks/use-admin-promotions";
 import type { AdminPromotion } from "@/types/admin-promotions";
 
 export function PromotionTable({ items }: { items: AdminPromotion[] }) {
   const remove = useDeleteAdminPromotion();
+  const dialog = useAppDialog();
   const [deletingId, setDeletingId] = useState<string | null>(null);
-  const deletePromotion = (promotion: AdminPromotion) => {
-    if (!window.confirm(`Delete ${promotion.name}? This cannot be undone.`)) return;
+  const deletePromotion = async (promotion: AdminPromotion) => {
+    const approved = await dialog.confirm({
+      title: "Delete this promotion?",
+      description: `${promotion.name} will stop appearing to customers and cannot be restored.`,
+      confirmLabel: "Delete promotion",
+      tone: "danger",
+    });
+    if (!approved) return;
     setDeletingId(promotion.id);
-    remove.mutate(promotion.id, { onSettled: () => setDeletingId(null) });
+    remove.mutate(promotion.id, {
+      onSuccess: () => toast.success("Promotion deleted", { description: `${promotion.name} is no longer available to customers.` }),
+      onError: (error) => toast.error("We couldn’t delete the promotion", { description: error.message }),
+      onSettled: () => setDeletingId(null),
+    });
   };
   return (
     <div className="rounded-2xl border border-[var(--line)] bg-[var(--page)] p-3 sm:p-5">
@@ -45,7 +58,7 @@ export function PromotionTable({ items }: { items: AdminPromotion[] }) {
                 <td className="px-3 py-[14px]">
                   <PromotionActions
                     deleting={deletingId === promotion.id}
-                    onDelete={() => deletePromotion(promotion)}
+                    onDelete={() => void deletePromotion(promotion)}
                     promotion={promotion}
                   />
                 </td>
@@ -71,7 +84,7 @@ export function PromotionTable({ items }: { items: AdminPromotion[] }) {
             <div className="mt-4">
               <PromotionActions
                 deleting={deletingId === promotion.id}
-                onDelete={() => deletePromotion(promotion)}
+                onDelete={() => void deletePromotion(promotion)}
                 promotion={promotion}
               />
             </div>

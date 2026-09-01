@@ -1,4 +1,5 @@
 import { Check } from "lucide-react";
+import { motion } from "motion/react";
 
 export type CheckoutStage =
   "shipping" | "packaging" | "impact" | "payment" | "review";
@@ -35,7 +36,8 @@ export function CheckoutProgress({
               onClick={() => onStageChange?.(step.id)}
               className="flex w-full min-w-0 flex-col items-center gap-1 text-center disabled:cursor-default sm:flex-row sm:gap-3 sm:text-left"
             >
-              <span
+              <motion.span
+                animate={{ scale: active ? 1.08 : 1, boxShadow: active ? "0 8px 22px rgba(61,85,64,.2)" : "0 0 0 rgba(61,85,64,0)" }}
                 className={`grid size-[26px] shrink-0 place-items-center rounded-full border text-[10px] font-semibold sm:size-10 sm:text-sm ${complete ? "border-[var(--brand)] bg-[var(--brand)] text-white" : active ? "border-2 border-[var(--brand)] bg-[#eef4ee] text-[var(--brand)]" : "border-[var(--line)] bg-transparent text-[var(--muted)]"}`}
               >
                 {complete ? (
@@ -43,7 +45,7 @@ export function CheckoutProgress({
                 ) : (
                   index + 1
                 )}
-              </span>
+              </motion.span>
               <span className="min-w-0">
                 <span className="block truncate text-[9px] font-semibold sm:text-sm">
                   {step.title}

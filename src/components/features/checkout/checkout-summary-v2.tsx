@@ -24,7 +24,7 @@ export function CheckoutSummary({
     : quote.totalCents;
   return (
     <aside
-      className="min-h-[500px] rounded-[20px] bg-[var(--subtle)] p-7"
+      className="glass-panel min-h-[500px] rounded-[20px] p-7"
       aria-label="Order summary"
     >
       <h2 className="serif text-[26px] leading-none">Your order</h2>

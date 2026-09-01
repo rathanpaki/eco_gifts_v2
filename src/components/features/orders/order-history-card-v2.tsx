@@ -13,7 +13,7 @@ export function OrderHistoryCard({ order }: { order: OrderSummary }) {
   const confirmed = order.deliveryConfirmationStatus === "confirmed";
   const item = order.items[0];
   return (
-    <article className="min-w-0 overflow-hidden rounded-[18px] border border-[var(--line)] p-4 sm:p-6">
+    <article className="glass-panel interactive-card min-w-0 rounded-[18px] p-4 sm:p-6">
       <header className="flex flex-col items-start gap-3 border-b border-[var(--line)] pb-4 sm:flex-row sm:justify-between sm:gap-4">
         <div className="min-w-0">
           <h2 className="break-words text-base font-semibold">Order {order.orderNumber}</h2>
@@ -88,7 +88,7 @@ export function OrderHistoryCard({ order }: { order: OrderSummary }) {
                     : "/orders/" + order.id +
                       "/tracking#delivery-confirmation"
                 }
-                className="flex min-h-12 items-center justify-center rounded-xl bg-[var(--brand)] px-6 text-xs font-semibold text-white sm:h-11 sm:min-h-0"
+                className="premium-action flex min-h-12 items-center justify-center rounded-xl bg-[var(--brand)] px-6 text-xs font-semibold text-white sm:h-11 sm:min-h-0"
               >
                 {confirmed ? "Review products" : "Confirm delivery"}
               </Link>
@@ -108,7 +108,7 @@ export function OrderHistoryCard({ order }: { order: OrderSummary }) {
           ) : (
             <Link
               href={"/orders/" + order.id + "/tracking"}
-              className="flex min-h-12 items-center justify-center rounded-xl bg-[var(--brand)] px-6 text-xs font-semibold text-white sm:h-11 sm:min-h-0"
+              className="premium-action flex min-h-12 items-center justify-center rounded-xl bg-[var(--brand)] px-6 text-xs font-semibold text-white sm:h-11 sm:min-h-0"
             >
               Track order
             </Link>

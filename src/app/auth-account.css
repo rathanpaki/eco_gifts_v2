@@ -1,7 +1,9 @@
 .auth-navbar {
   align-items: center;
-  background: white;
-  border-bottom: 1px solid var(--line);
+  background: rgba(250, 248, 243, 0.72);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 10px 38px rgba(28, 43, 32, 0.08);
+  backdrop-filter: blur(24px) saturate(155%);
   display: flex;
   gap: 22px;
   height: 72px;
@@ -42,6 +44,14 @@
 .recovery-card {
   border: 1px solid var(--line);
   border-radius: 20px;
+}
+.account-form,
+.recovery-preview,
+.recovery-card {
+  background: rgba(255, 255, 255, 0.56);
+  border-color: rgba(255, 255, 255, 0.74);
+  box-shadow: 0 18px 50px rgba(37, 42, 38, 0.09), inset 0 1px 0 white;
+  backdrop-filter: blur(22px) saturate(150%);
 }
 .account-form {
   padding: 24px 40px;

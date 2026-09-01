@@ -137,7 +137,9 @@ function CatalogFrame({
   return (
     <>
       <StorefrontHeader />
-      <main className={`shell ${spacing}`}>{children}</main>
+      <div className="catalog-page">
+        <main className={`shell ${spacing}`}>{children}</main>
+      </div>
     </>
   );
 }

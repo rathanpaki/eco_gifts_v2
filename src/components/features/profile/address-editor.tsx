@@ -49,7 +49,7 @@ export function AddressEditor(props: Props) {
     <div className="fixed inset-0 z-[80] grid place-items-center overflow-y-auto bg-black/50 p-4">
       <form
         onSubmit={submit}
-        className="my-6 w-full max-w-[720px] rounded-3xl bg-[var(--page)] p-6 shadow-2xl"
+        className="glass-panel my-6 w-full max-w-[720px] rounded-3xl p-6"
         role="dialog"
         aria-modal="true"
         aria-labelledby="address-editor-title"
@@ -76,7 +76,7 @@ export function AddressEditor(props: Props) {
         {props.error ? <p className="mt-3 text-sm text-red-700" role="alert">{props.error}</p> : null}
         <div className="mt-6 flex justify-end gap-3">
           <button type="button" onClick={props.onCancel} disabled={props.pending} className="h-11 rounded-xl border border-[var(--line)] px-5 text-sm font-semibold">Cancel</button>
-          <button type="submit" disabled={!valid || props.pending} className="h-11 rounded-xl bg-[var(--brand)] px-6 text-sm font-semibold text-white disabled:opacity-50">{props.pending ? "Saving..." : "Save address"}</button>
+          <button type="submit" disabled={!valid || props.pending} className="premium-action h-11 rounded-xl bg-[var(--brand)] px-6 text-sm font-semibold text-white disabled:opacity-50">{props.pending ? "Saving..." : "Save address"}</button>
         </div>
       </form>
     </div>

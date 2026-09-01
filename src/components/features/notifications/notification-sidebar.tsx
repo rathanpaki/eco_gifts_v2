@@ -5,7 +5,7 @@ import type { GiftPreferences } from "@/types/account-profile";
 export function NotificationSidebar(props: { preferences?: GiftPreferences }) {
   return (
     <aside className="grid content-start gap-5">
-      <section className="rounded-[20px] border border-[var(--line)] bg-transparent p-5">
+      <section className="glass-panel rounded-[20px] p-5">
         <h2 className="serif text-xl">Stay in control</h2>
         <p className="mt-2 text-xs leading-[17px] text-[var(--muted)]">
           Choose which updates reach your inbox and which stay here.
@@ -29,7 +29,7 @@ export function NotificationSidebar(props: { preferences?: GiftPreferences }) {
         </Link>
       </section>
 
-      <section className="grid min-h-[304px] justify-items-center rounded-[20px] border border-[var(--line)] bg-white p-7 text-center">
+      <section className="glass-panel grid min-h-[304px] justify-items-center rounded-[20px] p-7 text-center">
         <Bell aria-hidden="true" className="text-[var(--brand)]" size={40} />
         <h2 className="serif mt-2 text-[22px]">You’re all caught up</h2>
         <p className="mt-1 text-xs leading-[17px] text-[var(--muted)]">

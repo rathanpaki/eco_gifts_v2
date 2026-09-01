@@ -5,7 +5,7 @@ import type { AccountNotification } from "@/types/notifications";
 export function NotificationFeed(props: { items: AccountNotification[] }) {
   if (!props.items.length) {
     return (
-      <section className="grid min-h-[300px] place-items-center rounded-[20px] border border-[var(--line)] bg-white p-8 text-center">
+      <section className="glass-panel grid min-h-[300px] place-items-center rounded-[20px] p-8 text-center">
         <div>
           <Bell
             aria-hidden="true"
@@ -22,7 +22,7 @@ export function NotificationFeed(props: { items: AccountNotification[] }) {
   }
 
   return (
-    <section className="rounded-[20px] border border-[var(--line)] bg-white p-4">
+    <section className="glass-panel rounded-[20px] p-4">
       <p className="px-2 pb-3 text-[11px] font-semibold text-[#8a918a]">
         Recent
       </p>

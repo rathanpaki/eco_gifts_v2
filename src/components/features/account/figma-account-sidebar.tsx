@@ -9,7 +9,6 @@ import { apiMutation } from "@/services/client-api";
 const accountLinks = [
   { label: "Overview", href: "/account" },
   { label: "Orders", href: "/account/orders" },
-  { label: "Wishlist", href: "/wishlist" },
   { label: "Addresses", href: "/account/addresses" },
   { label: "Gift profiles", href: "/account/gift-profiles" },
   { label: "Preferences", href: "/account/preferences" },
@@ -45,7 +44,7 @@ export function FigmaAccountSidebar(props: {
 
   return (
     <>
-    <aside className="order-1 hidden h-fit rounded-2xl bg-[var(--subtle)] p-3 lg:sticky lg:top-24 lg:block lg:min-h-[652px] lg:p-5">
+    <aside className="glass-panel order-1 hidden h-fit rounded-2xl p-3 lg:sticky lg:top-24 lg:block lg:min-h-[652px] lg:p-5">
       <h2 className="text-[10px] font-semibold uppercase tracking-[0.12em] text-[var(--muted)]">
         My EcoGifts
       </h2>
@@ -62,7 +61,7 @@ export function FigmaAccountSidebar(props: {
               aria-current={active ? "page" : undefined}
               className={`flex h-10 shrink-0 items-center rounded-[10px] px-4 text-xs lg:h-11 lg:px-3 ${
                 active
-                  ? "bg-[var(--brand)] font-semibold text-white"
+                  ? "glass-nav-active font-semibold"
                   : "font-medium text-[var(--ink)] hover:bg-white/60"
               }`}
             >
@@ -94,7 +93,7 @@ export function FigmaAccountSidebar(props: {
       )}
     </aside>
     <div className="order-3 lg:hidden">
-      <button type="button" disabled={pending} onClick={logout} className="flex h-12 w-full items-center justify-center rounded-xl border border-[var(--muted)] bg-[var(--subtle)] text-sm font-semibold text-[var(--brand)] disabled:opacity-50">{pending ? "Signing out..." : "Sign out of this account"}</button>
+      <button type="button" disabled={pending} onClick={logout} className="glass-soft flex h-12 w-full items-center justify-center rounded-xl text-sm font-semibold text-[var(--brand)] disabled:opacity-50">{pending ? "Signing out..." : "Sign out of this account"}</button>
       {error ? <p className="mt-2 text-xs text-red-700" role="alert">{error}</p> : null}
     </div>
     </>

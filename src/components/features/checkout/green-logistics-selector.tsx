@@ -70,7 +70,7 @@ function DeliveryChoice({
       role="radio"
       aria-checked={selected}
       onClick={onSelect}
-      className={`h-[108px] rounded-2xl border p-3.5 text-left transition-colors ${selected ? "border-[1.5px] border-[var(--brand)] bg-[#eef4ee]" : "border-[#8a918a] bg-[var(--page)] hover:border-[var(--brand)]"}`}
+      className={`interactive-card glass-soft h-[108px] rounded-2xl p-3.5 text-left ${selected ? "ring-2 ring-[var(--brand)]" : "hover:ring-1 hover:ring-[var(--brand)]"}`}
     >
       <span className="flex h-full items-start gap-3">
         <span

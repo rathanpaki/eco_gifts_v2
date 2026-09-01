@@ -59,7 +59,7 @@ export function NotificationsPage() {
             type="button"
             onClick={() => mark.mutate()}
             disabled={!feed.data?.unreadCount || mark.isPending}
-            className="h-11 w-[142px] rounded-xl border border-[#b5c9b6] bg-white text-[13px] font-semibold text-[var(--brand)] disabled:opacity-50"
+            className="glass-soft premium-action h-11 w-[142px] rounded-xl text-[13px] font-semibold text-[var(--brand)] disabled:opacity-50"
           >
             {mark.isPending ? "Updating..." : "Mark all read"}
           </button>

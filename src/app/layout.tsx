@@ -7,6 +7,10 @@ import "./globals.css";
 import "./auth.css";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { AppSplash } from "@/components/features/splash/app-splash";
+import { AmbientEffects } from "@/components/ui/ambient-effects";
+import { PageTransition } from "@/components/ui/page-transition";
+import { HomeOverlay } from "@/components/features/landing/home-overlay";
+import { FeedbackProvider } from "@/components/providers/feedback-provider";
 
 export const metadata: Metadata = {
   title: "EcoGifts | Thoughtfully crafted gifts",
@@ -18,8 +22,12 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" data-scroll-behavior="smooth">
       <body>
         <QueryProvider>
-          <AppSplash />
-          {children}
+          <FeedbackProvider>
+            <AmbientEffects />
+            <AppSplash />
+            <PageTransition>{children}</PageTransition>
+            <HomeOverlay />
+          </FeedbackProvider>
         </QueryProvider>
       </body>
     </html>

@@ -16,7 +16,7 @@ export function ImpactWallet({
   vouchers: RewardVoucher[];
 }) {
   return (
-    <section className="rounded-2xl border border-[var(--line)] bg-white p-4 sm:p-6">
+    <section className="glass-panel rounded-2xl p-4 sm:p-6">
       <div className="flex flex-col items-start gap-4 sm:flex-row sm:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--brand)]">
@@ -28,7 +28,7 @@ export function ImpactWallet({
           </p>
         </div>
         <button
-          className="min-h-12 w-full rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white disabled:opacity-45 sm:min-h-11 sm:w-auto"
+          className="premium-action min-h-12 w-full rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white disabled:opacity-45 sm:min-h-11 sm:w-auto"
           disabled={pending || rewardPoints < 100}
           onClick={onRedeem}
           type="button"

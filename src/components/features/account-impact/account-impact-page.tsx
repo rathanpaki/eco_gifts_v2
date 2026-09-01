@@ -103,7 +103,7 @@ function Metric({
   value: string;
 }) {
   return (
-    <article className="min-w-0 rounded-2xl border border-[var(--line)] bg-white p-4 sm:p-5">
+    <article className="glass-panel interactive-card min-w-0 rounded-2xl p-4 sm:p-5">
       <Icon className="size-5 text-[var(--brand)]" />
       <p className="mt-3 truncate text-xl font-bold sm:mt-5 sm:text-2xl">{value}</p>
       <p className="mt-1 text-xs text-[var(--muted)] sm:text-sm">{label}</p>

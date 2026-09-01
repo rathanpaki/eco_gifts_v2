@@ -19,7 +19,7 @@ export function CartItemCard({ item }: { item: CartItem }) {
   };
 
   return (
-    <article className="grid grid-cols-[104px_minmax(0,1fr)] gap-x-3 gap-y-2 rounded-[18px] border border-[var(--line)] p-3 sm:min-h-[156px] sm:grid-cols-[150px_minmax(0,1fr)_104px] sm:gap-[18px] sm:p-[18px]">
+    <article className="glass-panel interactive-card grid grid-cols-[104px_minmax(0,1fr)] gap-x-3 gap-y-2 rounded-[18px] p-3 sm:min-h-[156px] sm:grid-cols-[150px_minmax(0,1fr)_104px] sm:gap-[18px] sm:p-[18px]">
       <ProductImage item={item} />
       <div className="min-w-0 py-1 sm:py-3">
         <Link

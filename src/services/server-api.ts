@@ -49,7 +49,7 @@ export async function requireUserSession(
   return result.data;
 }
 
-function isRedirectError(error: unknown): boolean {
+export function isRedirectError(error: unknown): boolean {
   return typeof error === "object" && error !== null && "digest" in error;
 }
 

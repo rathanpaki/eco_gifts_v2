@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+import { AnimatePresence, motion } from "motion/react";
 import { useRef, useState } from "react";
 import { shouldBypassImageOptimization } from "@/lib/image-source";
 import type { PublicProduct } from "@/types/catalog";
@@ -55,17 +56,12 @@ export function ProductGallery({
 
   return (
     <section aria-label={`${productName} image gallery`}>
-      <div className="relative h-[260px] overflow-hidden rounded-[18px] bg-[var(--subtle)] sm:h-auto sm:aspect-[8/7] sm:rounded-3xl">
-        <Image
-          key={selected.id}
-          src={selected.url}
-          alt={selected.alt}
-          fill
-          loading="eager"
-          unoptimized={shouldBypassImageOptimization(selected.url)}
-          sizes="(min-width: 1024px) 50vw, 100vw"
-          className="object-cover"
-        />
+      <div className="glass-panel relative h-[260px] overflow-hidden rounded-[18px] sm:h-auto sm:aspect-[8/7] sm:rounded-3xl">
+        <AnimatePresence initial={false} mode="wait">
+          <motion.div animate={{ opacity: 1, scale: 1 }} className="absolute inset-0" exit={{ opacity: 0, scale: 1.025 }} initial={{ opacity: 0, scale: 1.035 }} key={selected.id} transition={{ duration: 0.38, ease: [0.22, 1, 0.36, 1] }}>
+            <Image src={selected.url} alt={selected.alt} fill loading="eager" unoptimized={shouldBypassImageOptimization(selected.url)} sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+          </motion.div>
+        </AnimatePresence>
         <WishlistButton
           productId={productId}
           productName={productName}
@@ -86,7 +82,7 @@ export function ProductGallery({
                   <button
                     aria-label={`View image ${index + 1} of ${orderedImages.length}`}
                     aria-pressed={active}
-                    className={`relative block h-[72px] w-[88px] overflow-hidden rounded-[10px] border-2 bg-[var(--subtle)] ${active ? "border-[var(--brand)]" : "border-transparent"}`}
+                    className={`nav-icon relative block h-[72px] w-[88px] overflow-hidden rounded-[10px] border-2 bg-[var(--subtle)] ${active ? "is-active border-[var(--brand)]" : "border-transparent"}`}
                     onClick={() => select(index)}
                     onKeyDown={(event) => {
                       if (

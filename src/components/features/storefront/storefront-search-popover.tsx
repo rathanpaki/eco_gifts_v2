@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { Search } from "lucide-react";
+import { motion } from "motion/react";
 import { useEffect, useState } from "react";
 import { searchPublicProducts } from "@/services/catalog-search.service";
 import type { PublicProduct } from "@/types/catalog";
@@ -30,11 +31,17 @@ export function StorefrontSearchPopover() {
   }, [clean]);
 
   return (
-    <div className="pointer-events-none absolute inset-x-0 top-full px-5">
-      <form
+    <motion.div
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      className="pointer-events-none absolute inset-x-0 top-full px-5"
+      exit={{ opacity: 0, scale: 0.98, y: -10 }}
+      initial={{ opacity: 0, scale: 0.98, y: -12 }}
+      transition={{ damping: 23, stiffness: 280, type: "spring" }}
+    >
+      <motion.form
         action="/shop"
         role="search"
-        className="pointer-events-auto relative mx-auto flex h-[52px] w-full max-w-[460px] items-center gap-3 rounded-[14px] border border-[var(--line)] bg-white px-4 shadow-lg md:mr-[max(20px,calc((100%_-_1280px)/2))]"
+        className="glass-panel pointer-events-auto relative mx-auto flex h-[52px] w-full max-w-[460px] items-center gap-3 rounded-[14px] px-4 md:mr-[max(20px,calc((100%_-_1280px)/2))]"
       >
         <Search aria-hidden="true" size={18} />
         <label htmlFor="header-gift-search" className="sr-only">
@@ -60,7 +67,11 @@ export function StorefrontSearchPopover() {
           Search
         </button>
         {clean.length >= 2 ? (
-          <div className="absolute inset-x-0 top-[58px] overflow-hidden rounded-2xl border border-[var(--line)] bg-white p-2 shadow-xl">
+          <motion.div
+            animate={{ opacity: 1, y: 0 }}
+            className="glass-panel absolute inset-x-0 top-[58px] overflow-hidden rounded-2xl p-2"
+            initial={{ opacity: 0, y: -8 }}
+          >
             {loading ? (
               <p className="px-3 py-4 text-sm text-[var(--muted)]">Searching…</p>
             ) : items.length ? (
@@ -90,10 +101,10 @@ export function StorefrontSearchPopover() {
             ) : (
               <p className="px-3 py-4 text-sm text-[var(--muted)]">No matching gifts yet.</p>
             )}
-          </div>
+          </motion.div>
         ) : null}
-      </form>
-    </div>
+      </motion.form>
+    </motion.div>
   );
 }
 

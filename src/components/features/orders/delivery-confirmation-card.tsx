@@ -2,6 +2,7 @@
 
 import { CheckCircle2, PackageCheck } from "lucide-react";
 import type { DeliveryConfirmationStatus } from "@/types/checkout";
+import { useAppDialog } from "@/components/providers/feedback-provider";
 
 interface DeliveryConfirmationCardProps {
   confirmedAt: string | null;
@@ -18,6 +19,16 @@ export function DeliveryConfirmationCard({
   pending = false,
   status,
 }: DeliveryConfirmationCardProps) {
+  const dialog = useAppDialog();
+  const confirmDelivery = async () => {
+    const approved = await dialog.confirm({
+      title: "Confirm delivery?",
+      description: "Please confirm only when the package is safely in your possession. This completes its delivery record.",
+      confirmLabel: "Yes, I received it",
+      cancelLabel: "Not yet",
+    });
+    if (approved) onConfirm?.();
+  };
   if (status === "not_ready") return null;
   if (status === "confirmed") {
     return (
@@ -60,10 +71,7 @@ export function DeliveryConfirmationCard({
         <button
           type="button"
           disabled={pending}
-          onClick={() => {
-            if (window.confirm("Confirm that you received this order?"))
-              onConfirm();
-          }}
+          onClick={() => void confirmDelivery()}
           className="mt-4 min-h-11 w-full rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white disabled:cursor-wait disabled:opacity-60"
         >
           {pending ? "Confirming…" : "Confirm I received this order"}

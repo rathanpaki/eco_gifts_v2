@@ -32,7 +32,7 @@ export function EcoContributionSelector({
 
   return (
     <section
-      className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-xs"
+      className="glass-panel rounded-2xl p-6"
       aria-labelledby="contribution-title"
     >
       <div className="flex flex-wrap items-start justify-between gap-3">
@@ -59,7 +59,7 @@ export function EcoContributionSelector({
               key={cause}
               aria-pressed={selected}
               onClick={() => chooseCause(cause)}
-              className={`min-h-28 rounded-xl border p-4 text-left transition ${selected ? "border-[var(--brand)] bg-[var(--subtle)] ring-1 ring-[var(--brand)]" : "border-[var(--line)] hover:border-[var(--brand)]"}`}
+              className={`interactive-card glass-soft min-h-28 rounded-xl p-4 text-left ${selected ? "ring-2 ring-[var(--brand)]" : "hover:ring-1 hover:ring-[var(--brand)]"}`}
             >
               <Icon className="size-5 text-[var(--brand)]" aria-hidden="true" />
               <span className="mt-3 block text-sm font-semibold">{cause}</span>

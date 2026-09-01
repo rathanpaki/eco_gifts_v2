@@ -5,6 +5,7 @@ import {
   corporateImage,
   weddingImage,
 } from "@/constants/landing-images";
+import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 const occasions = [
   {
@@ -37,30 +38,24 @@ export function Occasions() {
   return (
     <section id="occasions" className="bg-[var(--subtle)] py-12 md:bg-transparent md:py-20">
       <div className="shell">
-      <div className="mb-6 flex items-end justify-between md:mb-8">
-        <h2 className="section-title">Curated for Every Moment</h2>
-        <Link href="/occasions" className="hidden text-sm text-[var(--brand)] sm:block">
-          View All →
-        </Link>
-      </div>
+      <ScrollReveal preset="fade-left">
+        <div className="mb-6 flex items-end justify-between md:mb-8">
+          <h2 className="section-title">Curated for Every Moment</h2>
+          <Link href="/occasions" className="hidden text-sm text-[var(--brand)] sm:block">
+            View All →
+          </Link>
+        </div>
+      </ScrollReveal>
       <div className="grid gap-5 md:h-[550px] md:grid-cols-[2fr_1fr] md:grid-rows-2">
-        {occasions.map((item) => (
-          <Link
-            href={`/shop?occasion=${item.occasion}`}
-            key={item.name}
-            className={
-              "group relative flex min-h-[116px] items-center gap-4 overflow-hidden rounded-2xl p-3.5 md:block md:min-h-64 md:p-0 " +
-              item.tone +
-              " " +
-              item.className
-            }
-          >
+        {occasions.map((item, index) => (
+          <ScrollReveal className={item.className} delay={index * 0.13} key={item.name} preset="scale-up">
+          <Link href={`/shop?occasion=${item.occasion}`} className={"landing-media-card group relative flex h-full min-h-[116px] items-center gap-4 overflow-hidden rounded-2xl p-3.5 md:block md:min-h-64 md:p-0 " + item.tone}>
             <div className="relative size-[88px] shrink-0 overflow-hidden rounded-xl md:absolute md:inset-0 md:size-auto md:rounded-none">
               <Image
                 src={item.image}
                 alt={`${item.name} sustainable gift collection`}
                 fill
-                className="object-cover object-center transition duration-500 group-hover:scale-105"
+                className="landing-card-image object-cover object-center"
                 sizes="(min-width:768px) 66vw, 88px"
               />
             </div>
@@ -77,6 +72,7 @@ export function Occasions() {
               </span>
             </div>
           </Link>
+          </ScrollReveal>
         ))}
       </div>
       <Link href="/occasions" className="mt-6 inline-flex text-sm font-semibold text-[var(--brand)] sm:hidden">

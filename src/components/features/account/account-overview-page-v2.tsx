@@ -73,7 +73,7 @@ export function AccountOverviewPage() {
       </section>
 
       <section className="mt-6 grid gap-3 sm:grid-cols-2 sm:gap-4">
-        <article className="min-h-28 rounded-2xl bg-[var(--subtle)] p-4 sm:min-h-32 sm:p-5">
+        <article className="glass-panel interactive-card min-h-28 rounded-2xl p-4 sm:min-h-32 sm:p-5">
           <h2 className="serif text-lg">Saved gift profiles</h2>
           <p className="mt-3 text-xs leading-4 text-[var(--muted)]">
             Keep recipients, occasions, and gift preferences together.
@@ -85,7 +85,7 @@ export function AccountOverviewPage() {
             View details
           </Link>
         </article>
-        <article className="min-h-28 rounded-2xl bg-[#eef4ee] p-4 sm:min-h-32 sm:p-5">
+        <article className="glass-panel interactive-card min-h-28 rounded-2xl p-4 sm:min-h-32 sm:p-5">
           <h2 className="serif text-lg">Your impact</h2>
           <p className="mt-3 text-xs leading-4 text-[var(--muted)]">
             {impact.data?.contributions.length ?? 0} verified contributions
@@ -120,7 +120,7 @@ function Metric({
         ? "sm:bg-[#f7eee7]"
         : "sm:bg-[var(--subtle)]";
   return (
-    <article className={`flex h-[72px] min-w-0 flex-col justify-center rounded-2xl p-0 sm:h-[102px] sm:p-5 ${background}`}>
+    <article className={`interactive-card flex h-[72px] min-w-0 flex-col justify-center rounded-2xl p-0 sm:h-[102px] sm:p-5 ${background}`}>
       <p className="truncate text-[10px] text-white/80 sm:text-[11px] sm:text-[var(--muted)]">{label}</p>
       <p className="serif mt-2 text-[23px] leading-none sm:mt-3 sm:text-[26px]">{value}</p>
     </article>

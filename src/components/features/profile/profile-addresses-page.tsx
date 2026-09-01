@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
+import { useAppDialog } from "@/components/providers/feedback-provider";
 import {
   useAccountProfile,
   useCreateAccountAddress,
@@ -17,14 +19,21 @@ export function ProfileAddressesPage() {
   const create = useCreateAccountAddress();
   const update = useUpdateAccountAddress();
   const remove = useDeleteAccountAddress();
+  const dialog = useAppDialog();
   const [editor, setEditor] = useState<AccountAddress | "new" | null>(null);
 
   if (profile.isPending) return <LogoDrawLoader label="Loading saved addresses" />;
   if (profile.error || !profile.data) return <p className="rounded-2xl bg-red-50 p-6 text-sm text-red-700">{profile.error?.message ?? "Addresses unavailable."}</p>;
 
   function save(values: AddressValues) {
-    if (editor === "new") create.mutate(values, { onSuccess: () => setEditor(null) });
-    else if (editor) update.mutate({ id: editor.id, values }, { onSuccess: () => setEditor(null) });
+    const saved = () => { setEditor(null); toast.success(editor === "new" ? "Address saved" : "Address updated", { description: `${values.label} is ready to select during checkout.` }); };
+    if (editor === "new") create.mutate(values, { onSuccess: saved });
+    else if (editor) update.mutate({ id: editor.id, values }, { onSuccess: saved });
+  }
+  async function removeAddress(address: AccountAddress) {
+    const approved = await dialog.confirm({ title: "Remove this address?", description: `${address.label} will no longer be available as a saved checkout address.`, confirmLabel: "Remove address", tone: "danger" });
+    if (!approved) return;
+    remove.mutate(address.id, { onSuccess: () => toast.success("Address removed", { description: `${address.label} was removed from your saved addresses.` }), onError: (error) => toast.error("We couldn’t remove the address", { description: error.message }) });
   }
   const error = create.error?.message ?? update.error?.message;
 
@@ -44,9 +53,7 @@ export function ProfileAddressesPage() {
             key={address.id}
             address={address}
             onEdit={() => setEditor(address)}
-            onRemove={() => {
-              if (window.confirm("Remove " + address.label + " address?")) remove.mutate(address.id);
-            }}
+            onRemove={() => void removeAddress(address)}
           />
         ))}
         {!profile.data.addresses.length ? <div className="rounded-2xl border border-dashed border-[var(--line)] p-6 text-sm text-[var(--muted)]">No saved addresses yet. An address entered at checkout will also appear here.</div> : null}

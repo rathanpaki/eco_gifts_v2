@@ -40,7 +40,7 @@ export function AccountSidebar({ email, isAdmin }: AccountSidebarProps) {
   };
 
   return (
-    <aside className="h-fit rounded-2xl border border-[var(--line)] bg-white p-4 lg:sticky lg:top-24">
+    <aside className="glass-panel h-fit rounded-2xl p-4 lg:sticky lg:top-24">
       <div className="border-b border-[var(--line)] px-2 pb-4">
         <p className="text-xs font-semibold uppercase tracking-wider text-[var(--muted)]">
           Account
@@ -104,7 +104,7 @@ function AccountLink({
     <Link
       href={href}
       aria-current={active ? "page" : undefined}
-      className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold ${active ? "bg-[var(--brand)] text-white" : "hover:bg-[var(--subtle)]"}`}
+      className={`flex items-center gap-2 rounded-xl px-3 py-2.5 text-sm font-semibold transition ${active ? "glass-nav-active" : "hover:bg-white/55"}`}
     >
       {children}
     </Link>

@@ -1,36 +1,48 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EcoGifts Storefront
 
-## Getting Started
+EcoGifts is the Next.js 16 storefront and administration interface for the
+EcoGifts API. It includes the public catalog, personalization, cart and
+checkout, customer accounts, impact reporting, and administrative workflows.
 
-First, run the development server:
+## Local setup
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Copy `.env.example` to `.env.local` and provide the Firebase client
+   configuration.
+2. Set `NEXT_PUBLIC_API_BASE_URL` and `API_BASE_URL` to the Nest API origin.
+3. Install dependencies with `npm install`.
+4. Start the UI with `npm run dev`.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The sibling `eco_gifts-_v2-B` project must be running for API-backed routes.
+The frontend and backend must use the same `SESSION_COOKIE_NAME`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Commands
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `npm run dev` starts the development server.
+- `npm test` runs dependency-free domain helper tests with Node's test runner.
+- `npm run lint` checks the source without modifying it.
+- `npm run build` performs the production build and TypeScript validation.
+- `npm start` serves a completed production build.
 
-## Learn More
+## Architecture
 
-To learn more about Next.js, take a look at the following resources:
+- `src/app` contains route boundaries and server-rendered entry points.
+- `src/components/features` contains feature UI.
+- `src/services` contains server and browser API clients.
+- `src/hooks` owns React Query integration and mutation state.
+- `src/lib/schemas` validates API responses at the frontend boundary.
+- `src/types` contains shared frontend contracts.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Protected routes first perform a lightweight cookie-presence check in the
+Next.js proxy. The server layouts then validate the session and role against
+the API; authorization is always enforced again by backend guards.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Demo boundaries
 
-## Deploy on Vercel
+Card entry is a development demonstration. Full card numbers and security
+codes remain in browser memory only; saved methods contain display metadata.
+The backend accepts `demo_card` only when its explicit development setting is
+enabled and cannot enable it in production.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Phone verification currently uses the documented development code in the UI.
+It is intentionally retained as a demo-only boundary and is not an SMS
+verification implementation.

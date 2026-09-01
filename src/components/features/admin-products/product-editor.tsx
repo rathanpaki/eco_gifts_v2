@@ -2,6 +2,8 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { useAppDialog } from "@/components/providers/feedback-provider";
 import { productFormSchema } from "@/lib/schemas/admin-product.schema";
 import {
   archiveAdminProduct,
@@ -27,6 +29,7 @@ export function ProductEditor({
   initialProduct?: AdminProduct;
 }) {
   const router = useRouter();
+  const dialog = useAppDialog();
   const [product, setProduct] = useState(initialProduct);
   const [values, setValues] = useState(() => formValues(initialProduct));
   const [tab, setTab] = useState<EditorTab>("general");
@@ -134,11 +137,19 @@ export function ProductEditor({
   };
 
   const archive = async () => {
-    if (!product || !window.confirm(`Archive ${product.name}?`)) return;
+    if (!product) return;
+    const approved = await dialog.confirm({
+      title: "Archive this product?",
+      description: `${product.name} will be removed from the storefront while its record remains available to administrators.`,
+      confirmLabel: "Archive product",
+      tone: "danger",
+    });
+    if (!approved) return;
     setPending(true);
     setError(null);
     try {
       await archiveAdminProduct(product.id);
+      toast.success("Product archived", { description: `${product.name} is no longer visible in the storefront.` });
       router.replace("/admin/products");
       router.refresh();
     } catch (reason) {

@@ -31,7 +31,7 @@ export function PrivacyCollectionDetails() {
   return (
     <section
       id="information-we-collect"
-      className="rounded-2xl border border-[var(--line)] bg-[var(--page)] p-6"
+      className="glass-panel rounded-2xl p-6"
     >
       <h2 className="serif text-[22px]">What we collect</h2>
       <div className="mt-3 grid gap-3">
@@ -55,7 +55,7 @@ export function DataControls(props: {
   return (
     <section
       id="your-privacy-choices"
-      className="rounded-2xl border border-[var(--line)] bg-[var(--page)] p-6"
+      className="glass-panel rounded-2xl p-6"
     >
       <h2 className="serif text-[22px]">Your data controls</h2>
       <p className="mt-3 text-[13px] text-[var(--muted)]">

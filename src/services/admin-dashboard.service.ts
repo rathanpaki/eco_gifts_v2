@@ -1,9 +1,9 @@
 import "server-only";
 
-import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { z } from "zod";
 import type { AdminDashboard } from "@/types/admin-dashboard";
+import { isRedirectError, serverApi } from "@/services/server-api";
 
 const amount = z.number().int().nonnegative();
 const dashboardSchema = z.object({
@@ -28,18 +28,12 @@ export type DashboardLoad =
   | { kind: "forbidden" }
   | { kind: "unavailable" };
 
-const apiBaseUrl = (process.env.API_BASE_URL ?? process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000").replace(/\/$/, "");
-
 export async function loadAdminDashboard(): Promise<DashboardLoad> {
-  const session = (await cookies()).get("session")?.value;
-  if (!session) redirect("/sign-in?next=/admin");
   let response: Response;
   try {
-    response = await fetch(`${apiBaseUrl}/api/admin/dashboard`, {
-      cache: "no-store",
-      headers: { Cookie: `session=${encodeURIComponent(session)}` },
-    });
-  } catch {
+    response = await serverApi("/admin/dashboard", "/admin");
+  } catch (error) {
+    if (isRedirectError(error)) throw error;
     return { kind: "unavailable" };
   }
   if (response.status === 401) redirect("/sign-in?next=/admin");

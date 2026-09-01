@@ -1,6 +1,6 @@
 .page {
   min-height: 100vh;
-  background: #faf8f3;
+  background: rgba(250, 248, 243, 0.7);
   color: #252a26;
   display: flex;
 }
@@ -11,7 +11,10 @@
   width: 240px;
   height: 100vh;
   padding: 28px 20px;
-  background: #252a26;
+  background: rgba(31, 39, 33, 0.9);
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 14px 0 44px rgba(24, 35, 27, 0.14);
+  backdrop-filter: blur(22px) saturate(140%);
   color: white;
   display: flex;
   flex-direction: column;
@@ -62,10 +65,15 @@
   padding: 10px 14px;
   font-size: 13px;
   text-decoration: none;
+  transition: background 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
 }
 
+.navLink:hover { background: rgba(255, 255, 255, 0.08); transform: translateX(3px); }
+
 .navActive {
-  background: #3d5540;
+  background: rgba(91, 126, 96, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18), inset 3px 0 0 #d7e5d8;
   color: white;
   font-weight: 600;
 }

@@ -6,8 +6,12 @@ import {
 } from "@/services/admin-products.service";
 
 export async function NewProductPage() {
-  const categories = await loadAdminProductCategories();
-  return <ProductEditor categories={categories} />;
+  const result = await loadAdminProductCategories();
+  return (
+    <ProductEditor
+      categories={result.kind === "ready" ? result.categories : []}
+    />
+  );
 }
 
 export async function EditProductPage({ id }: { id: string }) {
@@ -15,6 +19,11 @@ export async function EditProductPage({ id }: { id: string }) {
     loadAdminProduct(id),
     loadAdminProductCategories(),
   ]);
-  if (!product) notFound();
-  return <ProductEditor categories={categories} initialProduct={product} />;
+  if (product.kind !== "ready") notFound();
+  return (
+    <ProductEditor
+      categories={categories.kind === "ready" ? categories.categories : []}
+      initialProduct={product.product}
+    />
+  );
 }

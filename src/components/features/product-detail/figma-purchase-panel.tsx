@@ -100,7 +100,7 @@ export function PurchasePanel(props: PurchasePanelProps) {
             type="button"
             disabled={add.isPending || remove.isPending || update.isPending || existing.isFetching}
             onClick={() => void addToBag()}
-            className="flex h-11 flex-1 items-center justify-center rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white disabled:opacity-60"
+            className="premium-action flex h-11 flex-1 items-center justify-center rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white disabled:opacity-60"
           >
             {add.isPending || remove.isPending || update.isPending
               ? "Updating bag..."
@@ -112,7 +112,7 @@ export function PurchasePanel(props: PurchasePanelProps) {
       {(add.isSuccess || update.isSuccess) && (
         <Link
           href="/cart"
-          className="flex h-11 items-center justify-center gap-2 rounded-xl border border-[var(--brand)] text-sm font-semibold text-[var(--brand)]"
+          className="glass-soft premium-action flex h-11 items-center justify-center gap-2 rounded-xl text-sm font-semibold text-[var(--brand)]"
         >
           <Check aria-hidden="true" size={17} /> Added to bag · View bag
         </Link>

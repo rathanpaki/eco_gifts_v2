@@ -6,7 +6,7 @@ export function PreferenceCard(props: {
   title: string;
 }) {
   return (
-    <section className="rounded-2xl border border-[var(--line)] bg-[var(--page)] p-5 sm:p-6">
+    <section className="glass-panel rounded-2xl p-5 sm:p-6">
       <h2 className="text-xl font-semibold">{props.title}</h2>
       {props.description && (
         <p className="mt-2 text-sm text-[var(--muted)]">{props.description}</p>

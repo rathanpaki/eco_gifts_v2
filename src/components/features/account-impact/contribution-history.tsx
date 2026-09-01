@@ -7,7 +7,7 @@ export function ContributionHistory({
   contributions: EcoContribution[];
 }) {
   return (
-    <section className="rounded-2xl border border-[var(--line)] bg-white p-4 sm:p-6">
+    <section className="glass-panel rounded-2xl p-4 sm:p-6">
       <h2 className="text-lg font-bold sm:text-xl">Contribution history</h2>
       <p className="mt-1 text-sm text-[var(--muted)]">
         Every cause contribution is linked to its order and verification state.

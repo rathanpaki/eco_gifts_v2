@@ -1,13 +1,29 @@
 import type { NextConfig } from "next";
 
-const apiOrigin = new URL(
+const apiUrl = new URL(
   process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:4000",
-).origin;
+);
+const apiOrigin = apiUrl.origin;
+const apiProtocol = apiUrl.protocol === "https:" ? "https" : "http";
 
 const nextConfig: NextConfig = {
   images: {
     localPatterns: [{ pathname: "/images/**" }],
     remotePatterns: [
+      {
+        protocol: apiProtocol,
+        hostname: apiUrl.hostname,
+        port: apiUrl.port,
+        pathname: "/api/customizations/**",
+        search: "",
+      },
+      {
+        protocol: apiProtocol,
+        hostname: apiUrl.hostname,
+        port: apiUrl.port,
+        pathname: "/api/admin/orders/**",
+        search: "",
+      },
       { protocol: "https", hostname: "firebasestorage.googleapis.com" },
       { protocol: "https", hostname: "storage.googleapis.com" },
     ],

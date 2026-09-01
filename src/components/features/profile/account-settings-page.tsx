@@ -53,7 +53,7 @@ function SettingsNavigation(props: {
   onChange: (section: SettingsSection) => void;
 }) {
   return (
-    <nav className="mt-6 flex gap-2 overflow-x-auto rounded-xl bg-[var(--subtle)] p-1" aria-label="Account settings">
+    <nav className="glass-soft mt-6 flex gap-2 overflow-x-auto rounded-xl p-1" aria-label="Account settings">
       {settingsSections.map((item) => (
         <button
           key={item.id}
@@ -65,7 +65,7 @@ function SettingsNavigation(props: {
           }}
           className={`h-10 shrink-0 rounded-[9px] px-4 text-sm ${
             props.section === item.id
-              ? "bg-[var(--page)] font-semibold text-[var(--brand)] shadow-sm"
+              ? "glass-nav-active font-semibold"
               : "text-[var(--muted)]"
           }`}
         >

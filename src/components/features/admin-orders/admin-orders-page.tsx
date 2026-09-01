@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import { toast } from "sonner";
+import { useAppDialog } from "@/components/providers/feedback-provider";
 import {
   useAdminOrder,
   useAdminOrders,
@@ -19,6 +21,7 @@ import { OrderQueue } from "./order-queue";
 import styles from "./admin-orders.module.css";
 
 export function AdminOrdersPage() {
+  const dialog = useAppDialog();
   const [filter, setFilter] = useState<AdminOrderFilter>("all");
   const [chosenId, setChosenId] = useState<string>();
   const [exporting, setExporting] = useState(false);
@@ -37,14 +40,21 @@ export function AdminOrdersPage() {
     setChosenId(undefined);
     setFilter(value);
   };
-  const changeStatus = (status: FulfillmentStatus) => {
+  const changeStatus = async (status: FulfillmentStatus) => {
     if (!selectedId) return;
-    if (
-      status === "cancelled" &&
-      !window.confirm("Cancel this order and restore its product stock?")
-    )
-      return;
-    transition.mutate({ orderId: selectedId, status });
+    if (status === "cancelled") {
+      const approved = await dialog.confirm({
+        title: "Cancel this order?",
+        description: "The order will be cancelled and its reserved product stock will be restored. This action cannot be reversed.",
+        confirmLabel: "Cancel order",
+        tone: "danger",
+      });
+      if (!approved) return;
+    }
+    transition.mutate({ orderId: selectedId, status }, {
+      onSuccess: () => toast.success("Order status updated", { description: `The order is now ${status.replaceAll("_", " ")}.` }),
+      onError: (error) => toast.error("We couldn’t update the order", { description: error.message }),
+    });
   };
   const exportOrders = async () => {
     setExporting(true);

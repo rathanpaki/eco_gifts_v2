@@ -24,7 +24,7 @@ export function CatalogControls({
     !query.search && !query.category && !underFifty && !personalizable;
 
   return (
-    <section aria-label="Filter and sort gifts" className="relative md:min-h-[100px]">
+    <section aria-label="Filter and sort gifts" className="relative">
       <div className="flex flex-col gap-4 md:flex-row md:items-start md:justify-between md:gap-5">
         <nav className="-mx-5 flex gap-3 overflow-x-auto px-5 pb-1 sm:mx-0 sm:flex-wrap sm:px-0" aria-label="Product filters">
           <FilterLink

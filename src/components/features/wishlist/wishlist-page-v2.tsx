@@ -85,7 +85,7 @@ export function WishlistPage() {
 function EmptyState({ compact }: { compact: boolean }) {
   return (
     <section
-      className={`mt-7 flex min-h-[180px] flex-col items-center gap-5 rounded-2xl bg-[var(--subtle)] px-5 py-7 sm:flex-row sm:flex-wrap sm:gap-6 sm:px-8 ${compact ? "" : "justify-center text-center"}`}
+      className={`glass-panel mt-7 flex min-h-[180px] flex-col items-center gap-5 rounded-2xl px-5 py-7 sm:flex-row sm:flex-wrap sm:gap-6 sm:px-8 ${compact ? "" : "justify-center text-center"}`}
     >
       <span className="grid size-16 shrink-0 place-items-center rounded-full bg-[#eef4ee] text-[var(--brand)]">
         <Heart size={24} aria-hidden="true" />
@@ -99,7 +99,7 @@ function EmptyState({ compact }: { compact: boolean }) {
       </div>
       <Link
         href="/shop"
-        className="flex min-h-12 w-full items-center justify-center rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white sm:h-11 sm:w-auto sm:min-w-48"
+        className="premium-action flex min-h-12 w-full items-center justify-center rounded-xl bg-[var(--brand)] px-5 text-sm font-semibold text-white sm:h-11 sm:w-auto sm:min-w-48"
       >
         Browse collections
       </Link>

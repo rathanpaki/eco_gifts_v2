@@ -17,7 +17,7 @@ export function WishlistCard({ product }: { product: PublicProduct }) {
   const customized = product.savedCustomization;
   const imageUrl = customized ? customizationPreviewUrl(customized.previewPath) : image?.url;
   return (
-    <article className="relative h-[317px] min-w-0 rounded-2xl border border-[var(--line)] p-[14px]">
+    <article className="glass-panel interactive-card relative h-[317px] min-w-0 rounded-2xl p-[14px]">
       <Link
         href={productHref(product)}
         className="relative block h-[190px] overflow-hidden rounded-xl bg-[var(--subtle)]"
@@ -29,7 +29,7 @@ export function WishlistCard({ product }: { product: PublicProduct }) {
             sizes="282px"
             src={imageUrl}
             unoptimized={shouldBypassImageOptimization(imageUrl)}
-            className="object-cover"
+            className="object-cover transition-transform duration-700 hover:scale-[1.06]"
           />
         ) : null}
       </Link>

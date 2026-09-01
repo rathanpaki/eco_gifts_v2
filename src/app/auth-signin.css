@@ -14,8 +14,11 @@
   padding: 64px;
 }
 .brand-quote {
-  background: var(--page);
+  background: rgba(250, 248, 243, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.72);
   border-radius: 18px;
+  box-shadow: 0 18px 48px rgba(27, 38, 30, 0.17), inset 0 1px 0 white;
+  backdrop-filter: blur(20px) saturate(145%);
   padding: 28px;
 }
 .brand-quote p {

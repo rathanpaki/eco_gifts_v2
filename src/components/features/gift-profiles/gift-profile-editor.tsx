@@ -38,7 +38,7 @@ export function GiftProfileEditor(props: {
   }
   return (
     <div className="fixed inset-0 z-50 grid place-items-center bg-black/35 p-4" role="presentation">
-      <section className="w-full max-w-xl rounded-[20px] bg-[var(--page)] p-6 shadow-2xl" role="dialog" aria-modal="true" aria-labelledby="gift-profile-title">
+      <section className="glass-panel w-full max-w-xl rounded-[20px] p-6" role="dialog" aria-modal="true" aria-labelledby="gift-profile-title">
         <h2 id="gift-profile-title" className="serif text-2xl">{props.profile ? "Edit gift profile" : "Add gift profile"}</h2>
         <form className="mt-5 grid gap-4 sm:grid-cols-2" onSubmit={submit}>
           <Field label="Recipient name" value={values.recipientName} onChange={(value) => change("recipientName", value)} required />
@@ -49,7 +49,7 @@ export function GiftProfileEditor(props: {
           {props.error ? <p className="text-xs text-red-700 sm:col-span-2" role="alert">{props.error}</p> : null}
           <div className="flex justify-end gap-3 sm:col-span-2">
             <button type="button" className="h-10 rounded-[10px] border border-[var(--line)] px-5 text-xs font-semibold" onClick={props.onCancel}>Cancel</button>
-            <button disabled={props.pending} className="h-10 rounded-[10px] bg-[var(--brand)] px-5 text-xs font-semibold text-white disabled:opacity-50">{props.pending ? "Saving..." : "Save profile"}</button>
+            <button disabled={props.pending} className="premium-action h-10 rounded-[10px] bg-[var(--brand)] px-5 text-xs font-semibold text-white disabled:opacity-50">{props.pending ? "Saving..." : "Save profile"}</button>
           </div>
         </form>
       </section>

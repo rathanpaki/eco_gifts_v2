@@ -32,6 +32,7 @@ export function OccasionsPage() {
   return (
     <>
       <StorefrontHeader />
+      <div className="occasions-page">
       <main className="shell py-10 sm:py-14">
         <header className="max-w-3xl">
           <p className="eyebrow">Shop by occasion</p>
@@ -58,6 +59,7 @@ export function OccasionsPage() {
           ))}
         </section>
       </main>
+      </div>
     </>
   );
 }

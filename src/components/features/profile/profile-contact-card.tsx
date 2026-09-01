@@ -29,7 +29,7 @@ export function ProfileContactCard({ profile }: { profile: AccountProfile }) {
   }
 
   return (
-    <section className="rounded-[18px] border border-[var(--line)] p-5 sm:p-6">
+    <section className="glass-panel rounded-[18px] p-5 sm:p-6">
       <div className="flex flex-wrap items-center gap-5">
         <div className="relative grid size-24 shrink-0 place-items-center overflow-hidden rounded-full bg-[#eef4ee] text-2xl font-semibold text-[var(--brand)]">
           {profile.avatarUrl ? (
@@ -88,7 +88,7 @@ export function ProfileContactCard({ profile }: { profile: AccountProfile }) {
         <button
           type="submit"
           disabled={update.isPending || displayName.trim().length < 2}
-          className="mt-5 h-11 rounded-xl bg-[var(--brand)] px-6 text-sm font-semibold text-white disabled:opacity-50"
+          className="premium-action mt-5 h-11 rounded-xl bg-[var(--brand)] px-6 text-sm font-semibold text-white disabled:opacity-50"
         >
           {update.isPending ? "Saving..." : "Save profile"}
         </button>
