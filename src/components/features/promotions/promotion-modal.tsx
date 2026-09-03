@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { useHydrated } from "@/hooks/use-hydrated";
+import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
 import { useActivePromotions } from "@/hooks/use-promotions";
 import { promotionCopy } from "./promotion-copy";
 
@@ -21,6 +22,7 @@ export function PromotionModal({ onOpenChange, open }: Props) {
   const visible = open && items.length > 0;
   const safeIndex = items.length ? index % items.length : 0;
   const offer = items[safeIndex];
+  useBodyScrollLock(visible);
 
   useEffect(() => {
     if (!items.length) return;
@@ -36,13 +38,10 @@ export function PromotionModal({ onOpenChange, open }: Props) {
 
   useEffect(() => {
     if (!visible) return;
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     closeButton.current?.focus();
     const closeOnEscape = (event: KeyboardEvent) => event.key === "Escape" && onOpenChange(false);
     window.addEventListener("keydown", closeOnEscape);
     return () => {
-      document.body.style.overflow = previousOverflow;
       window.removeEventListener("keydown", closeOnEscape);
     };
   }, [onOpenChange, visible]);

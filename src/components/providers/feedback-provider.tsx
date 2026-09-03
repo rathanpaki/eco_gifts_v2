@@ -14,6 +14,7 @@ import { X } from "lucide-react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { Toaster } from "sonner";
 import { useHydrated } from "@/hooks/use-hydrated";
+import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
 
 type DialogTone = "default" | "danger";
 type DialogOptions = {
@@ -45,6 +46,7 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
   const [dialog, setDialog] = useState<DialogView | null>(null);
   const [value, setValue] = useState("");
   const resolver = useRef<((result: boolean | string | null) => void) | null>(null);
+  useBodyScrollLock(Boolean(dialog));
 
   const finish = useCallback((result: boolean | string | null) => {
     const settle = resolver.current;
@@ -73,12 +75,9 @@ export function FeedbackProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!dialog) return;
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     const close = (event: KeyboardEvent) => event.key === "Escape" && finish(null);
     window.addEventListener("keydown", close);
     return () => {
-      document.body.style.overflow = previous;
       window.removeEventListener("keydown", close);
     };
   }, [dialog, finish]);

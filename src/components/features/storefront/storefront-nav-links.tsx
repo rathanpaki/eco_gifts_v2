@@ -40,7 +40,7 @@ export function DesktopNavLinks() {
   );
 }
 
-export function MobileNavLinks({ cartCount, close }: { cartCount: number; close: () => void }) {
+export function MobileNavLinks({ admin, cartCount, close }: { admin: boolean; cartCount: number; close: () => void }) {
   const path = usePathname();
   return (
     <>
@@ -58,6 +58,9 @@ export function MobileNavLinks({ cartCount, close }: { cartCount: number; close:
       <details className="glass-soft rounded-xl px-3 py-2 text-sm">
         <summary className="flex min-h-10 cursor-pointer items-center font-semibold text-[var(--brand)]">Account</summary>
         <div className="grid grid-cols-2 gap-1 border-t border-white/60 pt-2">
+          {admin ? (
+            <MobileLink active={path.startsWith("/admin")} close={close} href="/admin" label="Admin dashboard" compact />
+          ) : null}
           {accountLinks.map(([label, href]) => (
             <MobileLink active={path === href} close={close} href={href} key={href} label={label} compact />
           ))}

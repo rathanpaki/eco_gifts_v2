@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { type FormEvent } from "react";
+import { useState, type FormEvent } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import {
   AuthButton,
@@ -17,14 +17,17 @@ import { AuthTabs } from "@/components/features/auth/auth-tabs";
 import { useAuthAction } from "@/hooks/use-auth-action";
 import { signIn, signInWithGoogle } from "@/services/auth.service";
 import type { SessionUser } from "@/types/auth";
+import { GoogleMark } from "./google-mark";
 
 export function SignInScreen({ nextPath }: { nextPath?: string }) {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { error, pending, run } = useAuthAction();
+  const [rememberMe, setRememberMe] = useState(true);
   const finish = (user: SessionUser) => {
     queryClient.clear();
-    router.push(destination(user, nextPath));
+    router.replace(destination(user, nextPath));
+    router.refresh();
   };
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -33,12 +36,13 @@ export function SignInScreen({ nextPath }: { nextPath?: string }) {
       signIn({
         email: String(values.email),
         password: String(values.password),
+        rememberMe,
       }),
     );
     if (user) finish(user);
   };
   const google = async () => {
-    const user = await run(signInWithGoogle);
+    const user = await run(() => signInWithGoogle(rememberMe));
     if (user) finish(user);
   };
   return (
@@ -69,7 +73,7 @@ export function SignInScreen({ nextPath }: { nextPath?: string }) {
             />
             <div className="remember-row">
               <label>
-                <input name="remember" type="checkbox" /> Remember me
+                <input checked={rememberMe} name="remember" onChange={(event) => setRememberMe(event.target.checked)} type="checkbox" /> Remember me
               </label>
               <Link href="/forgot-password">Forgot password?</Link>
             </div>
@@ -89,6 +93,7 @@ export function SignInScreen({ nextPath }: { nextPath?: string }) {
             onClick={google}
             type="button"
           >
+            <GoogleMark />
             Continue with Google
           </button>
           <Link className="auth-account-link" href="/sign-up">New to EcoGifts? Create an account →</Link>

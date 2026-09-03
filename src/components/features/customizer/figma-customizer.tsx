@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { StorefrontHeader } from "@/components/features/storefront/storefront-header";
 import { useCanvasCustomizer } from "@/hooks/use-canvas-customizer";
+import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
 import { useCreateCustomization, useUpdateCustomization } from "@/hooks/use-customization";
 import { useAddWishlistProduct } from "@/hooks/use-wishlist";
 import { customizationDesign } from "@/lib/customization-design";
@@ -15,6 +16,7 @@ import { PersonalizerTextLayers } from "./personalizer-text-layers";
 
 interface CustomizerModalProps { imageUrl?: string; initial?: SavedCustomization | null; productId: string; productName: string; onClose: () => void; onApply: (customization: SavedCustomization) => void | Promise<void> }
 export function CustomizerModal(props: CustomizerModalProps) {
+  const onClose = props.onClose;
   const [draft] = useState(() => props.initial ? loadPersonalizationDraft(props.initial.id) : null);
   const editor = useCanvasCustomizer(props.initial?.design, draft);
   const create = useCreateCustomization();
@@ -23,7 +25,8 @@ export function CustomizerModal(props: CustomizerModalProps) {
   const [destination, setDestination] = useState<"cart" | "wishlist">();
   const [localError, setLocalError] = useState<string>();
   const hasContent = editor.textLayers.some((layer) => layer.text.trim()) || editor.imageLayers.length > 0;
-  useEffect(() => { const previous = document.body.style.overflow; document.body.style.overflow = "hidden"; const key = (event: KeyboardEvent) => { if (event.key === "Escape" && !create.isPending && !update.isPending) props.onClose(); }; window.addEventListener("keydown", key); return () => { document.body.style.overflow = previous; window.removeEventListener("keydown", key); }; }, [props, create.isPending, update.isPending]);
+  useBodyScrollLock(true);
+  useEffect(() => { const key = (event: KeyboardEvent) => { if (event.key === "Escape" && !create.isPending && !update.isPending) onClose(); }; window.addEventListener("keydown", key); return () => window.removeEventListener("keydown", key); }, [onClose, create.isPending, update.isPending]);
   async function handleSave(target: "cart" | "wishlist") {
     setDestination(target); setLocalError(undefined);
     try {

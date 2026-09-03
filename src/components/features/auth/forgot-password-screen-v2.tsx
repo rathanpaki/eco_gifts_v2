@@ -52,8 +52,8 @@ export function ForgotPasswordScreen() {
             </AuthButton>
           </form>
           <p className="auth-recovery-note">
-            After submitting, check your inbox. Reset links expire after 30
-            minutes.
+            After submitting, check your inbox and spam folder. Reset links
+            expire automatically for your protection.
           </p>
           <p className="auth-legal">
             <Link href="/sign-in">Back to sign in</Link>

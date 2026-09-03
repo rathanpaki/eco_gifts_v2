@@ -80,6 +80,7 @@
   border: 1px solid var(--line);
   color: var(--ink);
   cursor: pointer;
+  gap: 10px;
 }
 @media (hover: hover) {
   .auth-button:hover,

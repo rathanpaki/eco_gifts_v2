@@ -53,6 +53,22 @@ export function isRedirectError(error: unknown): boolean {
   return typeof error === "object" && error !== null && "digest" in error;
 }
 
+export async function optionalSession(): Promise<SessionUser | null> {
+  const session = (await cookies()).get(sessionCookieName)?.value;
+  if (!session) return null;
+  try {
+    const response = await fetch(`${serverApiBaseUrl}/api/auth/me`, {
+      cache: "no-store",
+      headers: { Cookie: `${sessionCookieName}=${encodeURIComponent(session)}` },
+    });
+    if (!response.ok) return null;
+    const result = sessionUserSchema.safeParse((await response.json()).user);
+    return result.success ? result.data : null;
+  } catch {
+    return null;
+  }
+}
+
 function signInPath(nextPath: string): string {
   return `/sign-in?next=${encodeURIComponent(nextPath)}`;
 }

@@ -17,6 +17,7 @@ import { AuthTabs } from "@/components/features/auth/auth-tabs";
 import { useAuthAction } from "@/hooks/use-auth-action";
 import { signInWithGoogle, signUp } from "@/services/auth.service";
 import type { SessionUser } from "@/types/auth";
+import { GoogleMark } from "./google-mark";
 
 export function SignUpScreen() {
   const router = useRouter();
@@ -26,7 +27,8 @@ export function SignUpScreen() {
   const [termsError, setTermsError] = useState<string>();
   const finish = (user: SessionUser) => {
     queryClient.clear();
-    router.push(user.role === "ADMIN" ? "/admin" : "/account");
+    router.replace(user.role === "ADMIN" ? "/admin" : "/account");
+    router.refresh();
   };
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -114,6 +116,7 @@ export function SignUpScreen() {
             onClick={google}
             type="button"
           >
+            <GoogleMark />
             Continue with Google
           </button>
           <p className="auth-legal">

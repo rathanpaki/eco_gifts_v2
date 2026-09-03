@@ -7,6 +7,7 @@ import { usePathname } from "next/navigation";
 import { useState, type ReactNode } from "react";
 import { PromotionBanner } from "@/components/features/promotions/promotion-banner";
 import { useCartQuery } from "@/hooks/use-cart";
+import { useCurrentSession } from "@/hooks/use-current-session";
 import { useStoreSettings } from "@/hooks/use-store-settings";
 import { DesktopNavLinks, MobileNavLinks } from "./storefront-nav-links";
 import { StorefrontSearchPopover } from "./storefront-search-popover";
@@ -16,9 +17,12 @@ export function StorefrontHeader() {
   const [searchOpen, setSearchOpen] = useState(false);
   const path = usePathname();
   const { data: cart } = useCartQuery();
+  const { data: session } = useCurrentSession();
   const store = useStoreSettings();
   const cartCount = cart?.totalQuantity ?? 0;
   const acceptingOrders = store.data?.storefrontActive !== false;
+  const isAdmin = session?.role === "ADMIN";
+  const accountHref = isAdmin ? "/admin" : "/account";
 
   return (
     <>
@@ -51,7 +55,7 @@ export function StorefrontHeader() {
             <HeaderAction active={path === "/wishlist"} href="/wishlist" label="Open your wishlist">
               <Heart aria-hidden="true" size={18} />
             </HeaderAction>
-            <HeaderAction active={path.startsWith("/account")} href="/account" label="Open your account">
+            <HeaderAction active={path.startsWith(accountHref)} href={accountHref} label={isAdmin ? "Open the admin dashboard" : "Open your account"}>
               <User aria-hidden="true" size={18} />
             </HeaderAction>
             <Link
@@ -90,7 +94,7 @@ export function StorefrontHeader() {
               initial={{ height: 0, opacity: 0 }}
               transition={{ damping: 25, stiffness: 260, type: "spring" }}
             >
-              <MobileNavLinks cartCount={cartCount} close={() => setMenuOpen(false)} />
+              <MobileNavLinks admin={isAdmin} cartCount={cartCount} close={() => setMenuOpen(false)} />
             </motion.nav>
           ) : null}
         </AnimatePresence>

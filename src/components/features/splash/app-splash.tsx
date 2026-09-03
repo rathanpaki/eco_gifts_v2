@@ -2,28 +2,21 @@
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { useBodyScrollLock } from "@/hooks/use-body-scroll-lock";
 import { SplashScreen } from "./splash-screen";
 
 export function AppSplash() {
   const [visible, setVisible] = useState(true);
   const reduced = Boolean(useReducedMotion());
+  useBodyScrollLock(visible);
 
   useEffect(() => {
-    const previous = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
     const timer = window.setTimeout(
       () => setVisible(false),
       reduced ? 450 : 2550,
     );
-    return () => {
-      window.clearTimeout(timer);
-      document.body.style.overflow = previous;
-    };
+    return () => window.clearTimeout(timer);
   }, [reduced]);
-
-  useEffect(() => {
-    if (!visible) document.body.style.overflow = "";
-  }, [visible]);
 
   return (
     <AnimatePresence>

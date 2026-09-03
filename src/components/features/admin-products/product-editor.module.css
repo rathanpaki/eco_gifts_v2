@@ -12,6 +12,16 @@
   gap: 24px;
   align-items: flex-start;
 }
+.back {
+  color: #657066;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+}
+.back:hover {
+  color: #3d5540;
+}
 .header p {
   margin: 0;
   color: #8a918a;
@@ -39,6 +49,22 @@
   padding: 0 16px;
   font-weight: 600;
   cursor: pointer;
+}
+.cancel {
+  align-items: center;
+  border: 1px solid #e3e0d8;
+  border-radius: 10px;
+  color: #465047;
+  display: inline-flex;
+  font-size: 13px;
+  font-weight: 600;
+  justify-content: center;
+  min-height: 38px;
+  padding: 0 16px;
+  text-decoration: none;
+}
+.cancel:hover {
+  background: #f1eee7;
 }
 .actions .primary {
   min-width: 160px;
@@ -144,4 +170,5 @@
     width: 100%;
   }
   .actions span { grid-column: 1 / -1; width: fit-content; }
+  .cancel { width: 100%; }
 }

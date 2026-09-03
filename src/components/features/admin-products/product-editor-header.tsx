@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { AdminProduct } from "@/types/admin-product";
 import type { EditorTab } from "./product-editor-fields";
 import styles from "@/components/features/admin-products/product-editor.module.css";
@@ -27,7 +28,9 @@ export function ProductEditorHeader({
     <>
       <header className={styles.header}>
         <div>
-          <p>Edit product</p>
+          <Link className={styles.back} href="/admin/products">
+            ← Back to products
+          </Link>
           <h1>{name || "New product"}</h1>
         </div>
         <div className={styles.actions}>
@@ -52,6 +55,9 @@ export function ProductEditorHeader({
               Archive
             </button>
           )}
+          <Link className={styles.cancel} href="/admin/products">
+            Cancel
+          </Link>
           <button disabled={pending} value="draft">
             Save draft
           </button>

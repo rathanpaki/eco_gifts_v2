@@ -10,10 +10,12 @@ const firebaseMessages: Record<string, string> = {
   "auth/invalid-credential": "Email or password is incorrect.",
   "auth/invalid-email": "Enter a valid email address.",
   "auth/network-request-failed": "Firebase could not be reached. Check your connection and try again.",
-  "auth/operation-not-allowed": "Email and password registration is not enabled for this Firebase project.",
+  "auth/account-exists-with-different-credential": "This email already uses another sign-in method. Use that method first.",
+  "auth/operation-not-allowed": "This sign-in method is not enabled for this Firebase project.",
   "auth/popup-blocked": "Allow pop-ups to continue with Google.",
   "auth/popup-closed-by-user": "Google sign-in was cancelled.",
   "auth/too-many-requests": "Too many attempts were made. Wait a moment and try again.",
+  "auth/unauthorized-domain": "Google sign-in is not authorized for this website domain.",
   "auth/weak-password": "The password does not satisfy the Firebase password policy.",
 };
 

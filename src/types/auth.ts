@@ -5,9 +5,10 @@ export type AuthError = {
 export type SignInValues = {
   email: string;
   password: string;
+  rememberMe: boolean;
 };
 
-export type SignUpValues = SignInValues & {
+export type SignUpValues = Omit<SignInValues, "rememberMe"> & {
   fullName: string;
   marketingOptIn: boolean;
 };
